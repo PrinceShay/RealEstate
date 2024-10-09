@@ -36,12 +36,12 @@ export default function HeroSearch() {
     value: "15",
   }); // Standardwert für Reichweite
   const [type, setType] = useState<{ label: string; value: string } | null>({
-    label: "Haus kaufen",
-    value: "Buy house",
+    label: "Beliebig",
+    value: "any",
   }); // Standardwert für Typ
   const [price, setPrice] = useState<{ label: string; value: string } | null>({
-    label: "Bis zu 400,000€",
-    value: "400000",
+    label: "beliebig",
+    value: "any",
   }); // Standardwert für Preis
 
   const [options, setOptions] = useState<{ label: string; value: string }[]>(
@@ -266,7 +266,7 @@ export default function HeroSearch() {
 
       {/* Suchbutton */}
       <button
-        className="h-full bg-background text-foreground px-7 rounded-lg flex items-center gap-2 hover:bg-gray-300 transition-all ease-out"
+        className="h-full bg-mintGreen-light dark:bg-mintGreen-dark dark:hover:bg-mintGreen-darkHover text-foreground px-7 rounded-lg flex items-center gap-2 hover:bg-mintGreen-dark transition-all ease-out"
         onClick={handleSearch}
       >
         <Search />

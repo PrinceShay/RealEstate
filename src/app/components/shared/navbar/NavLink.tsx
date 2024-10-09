@@ -1,6 +1,7 @@
+"use client";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 export default function NavLink({
   title,
@@ -11,23 +12,39 @@ export default function NavLink({
   link: string;
   dropdownContent?: any;
 }) {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDropdownOpen(false);
+  };
+
   return (
-    <div className="relative group">
+    <div
+      className="relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <Link href={link}>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 hover:bg-gray-lighter dark:hover:bg-gray-darker p-3 rounded-xl ">
           {title}
           {/* Chevron nur anzeigen, wenn dropdownContent vorhanden ist */}
           {dropdownContent && (
             <ChevronDown
-              className="group-hover:rotate-180 transition-all ease-out"
+              className={`transition-all ease-out ${isDropdownOpen ? "rotate-180" : ""}`}
               size={16}
             />
           )}
         </div>
       </Link>
-      {/* Dropdown nur anzeigen, wenn dropdownContent vorhanden ist */}
+
       {dropdownContent && (
-        <div className="shadow-2xl origin-top absolute p-6 rounded-xl min-w-64 opacity-0 hidden bg-background text-foreground transition-[opacity] border group-hover:opacity-100 group-hover:block">
+        <div
+          className={`shadow-2xl origin-top absolute p-6 opacity-0 rounded-xl min-w-64 bg-background text-foreground transition-[opacity] border scale-100 ${isDropdownOpen ? "opacity-100" : ""}  block`}
+        >
           {dropdownContent}
         </div>
       )}

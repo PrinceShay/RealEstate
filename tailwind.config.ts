@@ -8,8 +8,24 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+	
   	extend: {
   		colors: {
+			mintGreen:{
+				'light': '#85C7AE',
+				'lightHover': '#85C7AE',
+				'dark': '#85C7AE',
+				'darkHover': '#A4D5C2',
+			},
+			gray:{
+				'lightest':'#E7EBEF',
+				'lighter':'#DAE0E7',
+				'light':'#CED6DF',
+				'dark':'#212B30',	//212B30
+				'darker':'#191F24',	//191F24
+				'darkest':'#101419', //#101419
+			},
+
 			
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

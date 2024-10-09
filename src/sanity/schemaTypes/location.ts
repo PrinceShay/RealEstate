@@ -1,7 +1,7 @@
 export default {
     name: 'location',
     title: 'Orte',
-    type: 'document',
+    type: 'object',
     fields: [
       {
         name: 'name',

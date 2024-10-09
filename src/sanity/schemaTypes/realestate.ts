@@ -63,6 +63,18 @@ export default {
         to: [{ type: 'estateType' }]
       },
       {
+        name: 'features',
+        title: 'Immobilien Features',
+        type: 'array',
+        of: [
+          {
+            type: 'reference',
+            to: [{ type: 'estateFeatures' }],
+          },
+        ],
+      },
+      
+      {
         name: 'area',
         title: 'Wohnfläche (m²)',
         type: 'number',

@@ -14,10 +14,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>
+      <body
+        className={`antialiased bg-gray-lightest dark:bg-gray-darkest dark:text-gray-lightest transition-colors`}
+      >
         <Navbar />
         {children}
       </body>
     </html>
   );
+}
+
+{
+  /* <div className="flex gap-2">
+        <Switch onCheckedChange={toggleViewMode} />
+        <label>
+          {viewMode === "list" ? "Switch to Grid View" : "Switch to List View"}
+        </label>
+      </div> */
 }

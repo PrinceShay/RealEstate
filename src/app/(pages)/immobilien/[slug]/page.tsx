@@ -1,5 +1,5 @@
 import React from "react";
-import { client, urlFor } from "@/app/lib/sanityClient";
+import { client } from "@/app/lib/sanityClient";
 import { FullEstate } from "@/app/lib/interface";
 
 async function getData(slug: string) {
@@ -47,8 +47,8 @@ export default async function page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div>
+    <section className="min-h-screen pt-64 px-6 md:px-24 lg:px-48 w-full">
       <h1>{estate.title}</h1>
-    </div>
+    </section>
   );
 }

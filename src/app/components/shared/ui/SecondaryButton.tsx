@@ -10,7 +10,10 @@ export default function SecondaryButton({
   link: string;
 }) {
   return (
-    <Link href={"/"} className="flex items-center gap-1 group ">
+    <Link
+      href={"/"}
+      className="flex items-center gap-1 group text-mintGreen-light dark:text-mintGreen-dark"
+    >
       {title}
       <div className="group-hover:translate-x-2 transition-all ease-out">
         <ChevronRight />

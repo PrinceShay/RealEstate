@@ -13,7 +13,7 @@ function Hero() {
           </div>
           <HeroSearch />
         </div>
-        <div className=" w-full h-full absolute z-10 bg-gradient-to-t from-black"></div>
+        <div className=" w-full h-full absolute z-10 bg-gradient-to-t from-gray-darker"></div>
         <Image
           src={"/images/index/Hero.jpg"}
           alt="Hero"

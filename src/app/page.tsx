@@ -4,6 +4,7 @@ import RecommendedObjects from "./components/index/recommendedObjects/Recommende
 import AboutUsIndex from "./components/index/aboutUs/AboutUsIndex";
 import Progress from "./components/index/Progress/Progress";
 import Faq from "./components/index/faq/Faq";
+import Features from "./components/index/features/Features";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <Hero />
       <RecommendedObjects />
       <AboutUsIndex />
+      <Features />
       <Progress />
       <Faq />
     </>
