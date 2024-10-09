@@ -51,7 +51,7 @@ export default function EstateItemList({ estate }: EstateItemListProps) {
     return createdAtDate > oneMonthAgo;
   }, [estate._createdAt]);
 
-  let formattedNumber = estate.price.toLocaleString("de-DE");
+  const formattedNumber = estate.price.toLocaleString("de-DE");
 
   const toggleSave = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();

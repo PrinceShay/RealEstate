@@ -4,7 +4,7 @@ import React from "react";
 
 export default function SecondaryButton({
   title,
-  link,
+  // link,
 }: {
   title: string;
   link: string;

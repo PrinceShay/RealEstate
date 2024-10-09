@@ -12,7 +12,7 @@ export default function Progress() {
   const ProgressContainer = useRef(null);
   const ProgressItemRef = useRef(null);
 
-  let scrollTween = useGSAP(
+  useGSAP(
     () => {
       gsap.to(ProgressItemRef.current, {
         xPercent: -100,

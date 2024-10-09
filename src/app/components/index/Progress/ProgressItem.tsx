@@ -3,7 +3,6 @@ import gsap from "gsap";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { start } from "repl";
 
 export default function ProgressItem() {
   gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -14,7 +13,7 @@ export default function ProgressItem() {
 
   useGSAP(
     () => {
-      let tl = gsap.timeline({
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: ProgressItem.current,
           start: "left 100%",

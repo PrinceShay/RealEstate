@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Select, { SingleValue, MultiValue } from "react-select";
+import Select, { MultiValue } from "react-select";
 import { client } from "@/app/lib/sanityClient";
 import { useRouter, useSearchParams } from "next/navigation";
 import { MapPin, Home, Euro, Filter } from "lucide-react"; // Icons

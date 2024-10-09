@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 function EstateItem({ estate }: { estate: any }) {
-  let formattedNumber = estate.price.toLocaleString("de-DE");
+  const formattedNumber = estate.price.toLocaleString("de-DE");
   return (
     <Link href={`/immobilien/${estate.slug.current}`}>
       <div className="group ">

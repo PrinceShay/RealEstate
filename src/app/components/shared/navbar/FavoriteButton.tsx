@@ -2,16 +2,12 @@
 import { Heart } from "lucide-react";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import PrimaryButton from "../ui/PrimaryButton";
-import SecondaryButton from "../ui/SecondaryButton";
 import React, { useEffect, useState } from "react";
 import EstateItemList from "../../immobilienList/EstateItemList";
 

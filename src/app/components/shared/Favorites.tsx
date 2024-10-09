@@ -4,7 +4,7 @@ import React from "react";
 const getSavedEstates = () => {
   if (typeof window !== "undefined") {
     // Überprüfen, ob der Code im Browser ausgeführt wird
-    let savedItems = JSON.parse(localStorage.getItem("savedEstates") || "[]");
+    const savedItems = JSON.parse(localStorage.getItem("savedEstates") || "[]");
     return savedItems; // Gibt die gespeicherten Immobilien zurück
   }
   return [];

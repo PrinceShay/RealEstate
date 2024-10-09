@@ -35,7 +35,7 @@ export async function RealEstateList(props: RealEstateListProps) {
   // Rest of your code remains the same, using the props instead of `useSearchParams`
 
   // Create an array of filters based on the selected values
-  let filters: string[] = [];
+  const filters: string[] = [];
 
   // Mapping for type conversion
   const typeMapping: Record<string, string> = {

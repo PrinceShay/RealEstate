@@ -36,7 +36,7 @@ const RecommendedObjects = async () => {
       </div>
       <div className="grid grid-cols-3 gap-12 mt-24">
         {estates.map((estate) => (
-          <Suspense fallback={<EstateItemLoader />}>
+          <Suspense key={estate.slug} fallback={<EstateItemLoader />}>
             <EstateItem estate={estate} key={estate.slug} />
           </Suspense>
         ))}

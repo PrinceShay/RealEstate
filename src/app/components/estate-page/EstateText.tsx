@@ -2,9 +2,7 @@ import { FullEstate } from "@/app/lib/interface";
 import Image from "next/image";
 import { PortableText } from "next-sanity"; // Use PortableText from next-sanity
 import React from "react";
-import { PortableTextBlock } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
-import { list } from "postcss";
 
 export default function EstateText({ estate }: { estate: FullEstate }) {
   const textComponents = {

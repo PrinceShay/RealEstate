@@ -9,8 +9,8 @@ import {
   Staging,
 } from "./featureItems/FeatureLib";
 
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
+// import { useGSAP } from "@gsap/react";
+// import gsap from "gsap";
 
 export default function Features() {
   const FeatureContainer = useRef(null);

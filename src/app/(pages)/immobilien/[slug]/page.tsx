@@ -5,7 +5,7 @@ import EstateContact from "@/app/components/estate-page/EstateContact";
 import EstateContent from "@/app/components/estate-page/EstateContent";
 import { Suspense } from "react";
 import EstateHeroLoader from "@/app/components/estate-page/EstateHeroLoader";
-import EstateHero from "@/app/components/estate-page/EstateHero";
+import EstateHero from "@/app/components/estate-page/estateHero";
 
 interface EstatePageProps {
   params: {

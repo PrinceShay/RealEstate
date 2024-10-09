@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import lottie, { AnimationItem } from "lottie-web";
 import PrimaryButton from "@/app/components/shared/ui/PrimaryButton";
-import { House } from "lucide-react";
 import Image from "next/image";
 
 export const Bewertung = () => {

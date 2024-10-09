@@ -2,7 +2,6 @@ import { FullEstate } from "@/app/lib/interface";
 import {
   Calendar,
   DoorClosed,
-  Fence,
   Hammer,
   House,
   LandPlot,
