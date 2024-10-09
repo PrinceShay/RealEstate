@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { Camera } from "lucide-react";
-import Features from "../index/features/Features";
 
 export default function EstateHero({ estate }: { estate: FullEstate }) {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
