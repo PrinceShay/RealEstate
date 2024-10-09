@@ -1,11 +1,11 @@
 import { fetchEstateBySlug } from "@/app/services/estateService";
 import { FullEstate } from "@/app/lib/interface";
 import { notFound } from "next/navigation";
-import EstateContact from "@/app/components/estatePage/EstateContact";
-import EstateContent from "@/app/components/estatePage/EstateContent";
+import EstateContact from "@/app/components/estate-page/EstateContact";
+import EstateContent from "@/app/components/estate-page/EstateContent";
 import { Suspense } from "react";
-import EstateHeroLoader from "@/app/components/estatePage/EstateHeroLoader";
-import EstateHero from "@/app/components/estatePage/EstateHero";
+import EstateHeroLoader from "@/app/components/estate-page/EstateHeroLoader";
+import EstateHero from "@/app/components/estate-page/EstateHero";
 
 interface EstatePageProps {
   params: {

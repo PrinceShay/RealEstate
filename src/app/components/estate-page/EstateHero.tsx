@@ -1,10 +1,9 @@
 "use client";
-
+import { FullEstate } from "@/app/lib/interface";
 import React, { useState } from "react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { Camera } from "lucide-react";
-import { FullEstate } from "@/app/lib/interface";
 
 export default function EstateHero({ estate }: { estate: FullEstate }) {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
