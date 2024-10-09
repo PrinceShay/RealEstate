@@ -1,23 +1,38 @@
+// RealEstateList.tsx
+
 import { EstateCard } from "@/app/lib/interface";
 import { client } from "@/app/lib/sanityClient";
 import EstateDisplay from "./EstateDisplay";
 import EstateListFilter from "./EstateListFilter";
-import { useSearchParams } from "next/navigation";
+
+// Define the props interface
+interface RealEstateListProps {
+  location: string;
+  type: string;
+  priceFrom?: string;
+  priceTo?: string;
+  roomsFrom?: string;
+  roomsTo?: string;
+  areaFrom?: string;
+  areaTo?: string;
+  features?: string;
+}
 
 // This is the server component for fetching data
-export async function RealEstateList() {
-  const searchParams = useSearchParams();
+export async function RealEstateList(props: RealEstateListProps) {
+  const {
+    location = "",
+    type = "any",
+    priceFrom = "",
+    priceTo = "",
+    roomsFrom = "",
+    roomsTo = "",
+    areaFrom = "",
+    areaTo = "",
+    features = "",
+  } = props;
 
-  // Extract query parameters
-  const location = searchParams.get("location") || "";
-  const type = searchParams.get("type") || "any";
-  const priceFrom = searchParams.get("priceFrom") || "";
-  const priceTo = searchParams.get("priceTo") || "";
-  const roomsFrom = searchParams.get("roomsFrom") || "";
-  const roomsTo = searchParams.get("roomsTo") || "";
-  const areaFrom = searchParams.get("areaFrom") || "";
-  const areaTo = searchParams.get("areaTo") || "";
-  const features = searchParams.get("features") || "";
+  // Rest of your code remains the same, using the props instead of `useSearchParams`
 
   // Create an array of filters based on the selected values
   let filters: string[] = [];
@@ -61,7 +76,7 @@ export async function RealEstateList() {
     price,
     rooms,
     description,
-    _createdAt, // Füge dies hinzu
+    _createdAt,
     estateType->{
       name,
     },
@@ -89,7 +104,6 @@ export async function RealEstateList() {
         </section>
       );
     }
-    console.log(query);
 
     // If estates are found, render the client component
     return (

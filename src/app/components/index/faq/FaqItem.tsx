@@ -23,9 +23,9 @@ export default function FaqItem({ title, text }: Props) {
   }, [open]);
 
   return (
-    <div className="rounded-xl bg-white dark:bg-gray-darker dark:bg-gunMetal-500 shadow-2xl p-6 cursor-pointer">
+    <div className="rounded-xl bg-white dark:bg-gray-darker dark:bg-gunMetal-500 shadow-2xl group p-6 cursor-pointer ">
       <div
-        className="flex items-center justify-between w-full text-xl"
+        className="flex items-center justify-between w-full text-xl group-hover:text-mintGreen-light"
         onClick={handleClick}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
@@ -38,7 +38,7 @@ export default function FaqItem({ title, text }: Props) {
       >
         {title}
         <ChevronDown
-          className={`transform transition-transform duration-300 ease-out ${
+          className={`transform  transition-transform duration-300 ease-out ${
             open ? "rotate-180" : ""
           }`}
         />

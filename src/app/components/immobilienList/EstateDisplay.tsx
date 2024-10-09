@@ -3,14 +3,9 @@
 import { useState } from "react";
 import EstateItem from "@/app/components/index/recommendedObjects/EstateItem";
 import EstateItemList from "@/app/components/immobilienList/EstateItemList";
-import { EstateCard } from "@/app/lib/interface";
 import { Switch } from "@/components/ui/switch";
 
-interface EstateDisplayProps {
-  estates: EstateCard[];
-}
-
-export default function EstateDisplay({ estates }: EstateDisplayProps) {
+export default function EstateDisplay({ estates }) {
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
 
   const toggleViewMode = () => {

@@ -11,18 +11,22 @@ type Feature = {
 
 type Estate = {
   slug: { current: string };
-  firstImage: any;
-  title: string;
+  _createdAt: string;
   price: number;
-  description: any;
+  firstImage?: any; // Replace 'any' with the actual type if available
+  title: string;
   place: { name: string };
+  description: any; // Replace 'any' with the actual type if available
+  features?: Feature[];
   area: number;
   rooms: number;
-  features?: Feature[];
-  _createdAt: string; // Hinzugefügt
 };
 
-export default function EstateItemList({ estate }: { estate: Estate }) {
+type EstateItemListProps = {
+  estate: Estate;
+};
+
+export default function EstateItemList({ estate }: EstateItemListProps) {
   const components = {};
 
   const [isSaved, setIsSaved] = React.useState(false);
@@ -49,7 +53,7 @@ export default function EstateItemList({ estate }: { estate: Estate }) {
 
   let formattedNumber = estate.price.toLocaleString("de-DE");
 
-  const toggleSave = (e: any) => {
+  const toggleSave = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (typeof window !== "undefined") {
       let savedItems = JSON.parse(localStorage.getItem("savedEstates") || "[]");

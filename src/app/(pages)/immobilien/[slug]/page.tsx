@@ -5,6 +5,8 @@ import EstateHero from "@/app/components/estatePage/EstateHero";
 import EstateDetails from "@/app/components/estatePage/EstateDetails";
 import EstateContact from "@/app/components/estatePage/EstateContact";
 import EstateContent from "@/app/components/estatePage/EstateContent";
+import { Suspense } from "react";
+import EstateHeroLoader from "@/app/components/estatePage/EstateHeroLoader";
 
 interface EstatePageProps {
   params: {
@@ -21,7 +23,9 @@ const EstatePage: React.FC<EstatePageProps> = async ({ params }) => {
 
   return (
     <main className="px-16 max-w-[1600px] mx-auto py-48 w-full">
-      <EstateHero estate={estate} />
+      <Suspense fallback={<EstateHeroLoader />}>
+        <EstateHero estate={estate} />
+      </Suspense>
       <div className="mt-24 grid grid-cols-3 gap-24">
         <EstateContent estate={estate} />
         <EstateContact estate={estate} />
