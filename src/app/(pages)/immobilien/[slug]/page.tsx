@@ -13,7 +13,7 @@ interface EstatePageProps {
   };
 }
 
-const EstatePage: React.FC<EstatePageProps> = async ({ params }) => {
+const Page: React.FC<EstatePageProps> = async ({ params }) => {
   const estate: FullEstate | null = await fetchEstateBySlug(params.slug);
 
   if (!estate) {
@@ -33,4 +33,4 @@ const EstatePage: React.FC<EstatePageProps> = async ({ params }) => {
   );
 };
 
-export default EstatePage;
+export default Page;
