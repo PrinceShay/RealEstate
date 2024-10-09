@@ -1,54 +1,33 @@
-import React from "react";
-import { client } from "@/app/lib/sanityClient";
+import { fetchEstateBySlug } from "@/app/services/estateService";
 import { FullEstate } from "@/app/lib/interface";
+import { notFound } from "next/navigation";
+import EstateHero from "@/app/components/estatePage/EstateHero";
+import EstateDetails from "@/app/components/estatePage/EstateDetails";
+import EstateContact from "@/app/components/estatePage/EstateContact";
+import EstateContent from "@/app/components/estatePage/EstateContent";
 
-async function getData(slug: string) {
-  const query = `*[_type == "realEstate" && slug.current == $slug][0]{
-      title,
-      slug,
-      gallery[] {
-        "imageUrl": asset->url,
-        caption
-      },
-      price,
-      area,
-      rooms,
-      plotSize,
-      address,
-      place,
-      description[] {
-        ...
-      },
-      location[] {
-        ...
-      },
-      floorPlan[] {
-        "imageUrl": asset->url
-      },
-      agent->{
-        name,
-        phone,
-        email
-      }
-    }`;
-  const estate = await client.fetch(query, { slug });
-  return estate;
+interface EstatePageProps {
+  params: {
+    slug: string;
+  };
 }
 
-export default async function page({ params }: { params: { slug: string } }) {
-  const estate: FullEstate = await getData(params.slug);
+const EstatePage: React.FC<EstatePageProps> = async ({ params }) => {
+  const estate: FullEstate | null = await fetchEstateBySlug(params.slug);
 
   if (!estate) {
-    return (
-      <section className="min-h-screen pt-64 px-6 md:px-24 lg:px-48">
-        <h1 className="">Beitrag nicht gefunden</h1>
-      </section>
-    );
+    notFound();
   }
 
   return (
-    <section className="min-h-screen pt-64 px-6 md:px-24 lg:px-48 w-full">
-      <h1>{estate.title}</h1>
-    </section>
+    <main className="px-16 max-w-[1600px] mx-auto py-48 w-full">
+      <EstateHero estate={estate} />
+      <div className="mt-24 grid grid-cols-3 gap-24">
+        <EstateContent estate={estate} />
+        <EstateContact estate={estate} />
+      </div>
+    </main>
   );
-}
+};
+
+export default EstatePage;

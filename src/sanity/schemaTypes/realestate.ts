@@ -114,7 +114,11 @@ export default {
         name: 'location',
         title: 'Lage',
         type: 'array',
-        of: [{ type: 'block' }]
+        of: [{ 
+          type: 'block',
+          styles: [],
+          lists: [{ title: 'Bullet', value: 'bullet' }, { title: 'Numbered', value: 'number' }] 
+        }]
       },
 
       {
