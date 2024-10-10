@@ -1,25 +1,8 @@
-"use client";
-
 import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import EstateItemLoader from "@/app/components/index/recommendedObjects/EstateItemLoader";
-import { RealEstateList } from "@/app/components/immobilienList/RealEstateList";
-
-// Force dynamic rendering to prevent build-time errors
-export const dynamic = "force-dynamic";
+import RealEstateListWrapper from "@/app/components/immobilienList/RealEstateListWrapper";
 
 const Page = () => {
-  const searchParams = useSearchParams();
-  const location = searchParams.get("location") || "";
-  const type = searchParams.get("type") || "any";
-  const priceFrom = searchParams.get("priceFrom") || "";
-  const priceTo = searchParams.get("priceTo") || "";
-  const roomsFrom = searchParams.get("roomsFrom") || "";
-  const roomsTo = searchParams.get("roomsTo") || "";
-  const areaFrom = searchParams.get("areaFrom") || "";
-  const areaTo = searchParams.get("areaTo") || "";
-  const features = searchParams.get("features") || "";
-
   return (
     <Suspense
       fallback={
@@ -32,17 +15,7 @@ const Page = () => {
         </section>
       }
     >
-      <RealEstateList
-        location={location}
-        type={type}
-        priceFrom={priceFrom}
-        priceTo={priceTo}
-        roomsFrom={roomsFrom}
-        roomsTo={roomsTo}
-        areaFrom={areaFrom}
-        areaTo={areaTo}
-        features={features}
-      />
+      <RealEstateListWrapper />
     </Suspense>
   );
 };
