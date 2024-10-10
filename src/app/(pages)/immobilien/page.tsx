@@ -3,7 +3,10 @@
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import EstateItemLoader from "@/app/components/index/recommendedObjects/EstateItemLoader";
-import { RealEstateList } from "@/app/components/immobilienList/RealEstateList"; // Correctly using named export
+import { RealEstateList } from "@/app/components/immobilienList/RealEstateList";
+
+// Force dynamic rendering to prevent build-time errors
+export const dynamic = "force-dynamic";
 
 const Page = () => {
   const searchParams = useSearchParams();
