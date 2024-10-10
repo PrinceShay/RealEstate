@@ -5,7 +5,7 @@ import EstateItem from "@/app/components/index/recommendedObjects/EstateItem";
 import EstateItemList from "@/app/components/immobilienList/EstateItemList";
 import { Switch } from "@/components/ui/switch";
 
-export default function EstateDisplay({ estates }) {
+export default function EstateDisplay({ estates }: { estates: any }) {
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
 
   const toggleViewMode = () => {
@@ -33,13 +33,13 @@ export default function EstateDisplay({ estates }) {
 
       {viewMode === "list" ? (
         <div className="flex flex-col gap-4">
-          {estates.map((estate) => (
+          {estates.map((estate: any) => (
             <EstateItemList key={estate.slug} estate={estate} />
           ))}
         </div>
       ) : (
         <div className="grid grid-cols-3 gap-12">
-          {estates.map((estate) => (
+          {estates.map((estate: any) => (
             <EstateItem key={estate.slug} estate={estate} />
           ))}
         </div>
