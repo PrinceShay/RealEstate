@@ -49,10 +49,14 @@ export default function DarkModeToggle() {
 
   return (
     <button
-      className="hover:bg-gray-lighter  text-gray-darkest dark:hover:bg-gray-darker dark:text-gray-lightest  rounded-full h-full aspect-square p-4"
+      className="hover:bg-gray-lighter group  text-gray-darkest dark:hover:bg-gray-darker dark:text-gray-lightest  rounded-full h-full aspect-square p-4"
       onClick={() => setDarkMode(!darkMode)}
     >
-      {darkMode ? <Sun strokeWidth={1.5} /> : <Moon strokeWidth={1.5} />}
+      {darkMode ? (
+        <Sun strokeWidth={1.5} className="group-hover:fill-gray-lightest" />
+      ) : (
+        <Moon strokeWidth={1.5} className="group-hover:fill-gray-darkest" />
+      )}
     </button>
   );
 }

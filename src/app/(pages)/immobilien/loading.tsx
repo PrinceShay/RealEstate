@@ -1,6 +1,4 @@
 "use client";
-
-import { MapPin } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
