@@ -1,23 +1,9 @@
-import { Suspense } from "react";
-import EstateItemLoader from "@/app/components/index/recommendedObjects/EstateItemLoader";
-import RealEstateListWrapper from "@/app/components/immobilienList/RealEstateListWrapper";
+import RealEstateList from "@/app/components/immobilienList/RealEstateList";
 
-const Page = () => {
-  return (
-    <Suspense
-      fallback={
-        <section className="px-16 max-w-[1600px] mx-auto py-24">
-          <div className="grid grid-cols-3 gap-12 mt-24">
-            {Array.from({ length: 3 }).map((_, index) => (
-              <EstateItemLoader key={index} />
-            ))}
-          </div>
-        </section>
-      }
-    >
-      <RealEstateListWrapper />
-    </Suspense>
-  );
-};
+interface PageProps {
+  searchParams: { [key: string]: string | string[] | undefined };
+}
 
-export default Page;
+export default function Page({ searchParams }: PageProps) {
+  return <RealEstateList searchParams={searchParams} />;
+}

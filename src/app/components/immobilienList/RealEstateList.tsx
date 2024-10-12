@@ -1,43 +1,44 @@
-// RealEstateList.tsx
-
 import { EstateCard } from "@/app/lib/interface";
 import { client } from "@/app/lib/sanityClient";
 import EstateDisplay from "./EstateDisplay";
 import EstateListFilter from "./EstateListFilter";
 
-// Define the props interface
 interface RealEstateListProps {
-  location: string;
-  type: string;
-  priceFrom?: string;
-  priceTo?: string;
-  roomsFrom?: string;
-  roomsTo?: string;
-  areaFrom?: string;
-  areaTo?: string;
-  features?: string;
+  searchParams: {
+    [key: string]: string | string[] | undefined;
+  };
 }
 
-// This is the server component for fetching data
-export async function RealEstateList(props: RealEstateListProps) {
-  const {
-    location = "",
-    type = "any",
-    priceFrom = "",
-    priceTo = "",
-    roomsFrom = "",
-    roomsTo = "",
-    areaFrom = "",
-    areaTo = "",
-    features = "",
-  } = props;
+// Hilfsfunktion, um den ersten Parameter als String zu erhalten
+function getFirstParam(
+  param: string | string[] | undefined,
+  defaultValue: string = ""
+): string {
+  if (Array.isArray(param)) {
+    return param[0];
+  } else if (typeof param === "string") {
+    return param;
+  } else {
+    return defaultValue;
+  }
+}
 
-  // Rest of your code remains the same, using the props instead of `useSearchParams`
+export default async function RealEstateList({
+  searchParams,
+}: RealEstateListProps) {
+  const location = getFirstParam(searchParams.location);
+  const type = getFirstParam(searchParams.type, "any");
+  const priceFrom = getFirstParam(searchParams.priceFrom);
+  const priceTo = getFirstParam(searchParams.priceTo);
+  const roomsFrom = getFirstParam(searchParams.roomsFrom);
+  const roomsTo = getFirstParam(searchParams.roomsTo);
+  const areaFrom = getFirstParam(searchParams.areaFrom);
+  const areaTo = getFirstParam(searchParams.areaTo);
+  const featuresParam = searchParams.features;
 
-  // Create an array of filters based on the selected values
+  // Filter erstellen basierend auf den Parametern
   const filters: string[] = [];
 
-  // Mapping for type conversion
   const typeMapping: Record<string, string> = {
     "buy house": "Haus",
     "buy apartment": "Wohnung",
@@ -45,7 +46,6 @@ export async function RealEstateList(props: RealEstateListProps) {
     "buy land": "Grundstück",
   };
 
-  // Add filters only if values are present
   if (location) filters.push(`place->name match "${location}"`);
   if (type !== "any") {
     const mappedType = typeMapping[type.toLowerCase()];
@@ -60,13 +60,24 @@ export async function RealEstateList(props: RealEstateListProps) {
   if (areaFrom) filters.push(`area >= ${areaFrom}`);
   if (areaTo) filters.push(`area <= ${areaTo}`);
 
-  // Handle features (multiple selections)
-  if (features) {
-    const featureList = features.split(",").map((feature) => `"${feature}"`);
-    filters.push(`features[]->name in [${featureList.join(",")}]`);
+  // Verarbeitung der Features
+  let featureList: string[] = [];
+
+  if (featuresParam) {
+    if (Array.isArray(featuresParam)) {
+      featureList = featuresParam;
+    } else if (typeof featuresParam === "string") {
+      featureList = featuresParam.split(",");
+    }
+    if (featureList.length > 0) {
+      const featureStrings = featureList.map(
+        (feature: string) => `"${feature}"`
+      );
+      filters.push(`features[]->name in [${featureStrings.join(",")}]`);
+    }
   }
 
-  // Construct the query dynamically based on the filters
+  // Konstruktion der Abfrage
   const query = `*[_type == "realEstate" ${
     filters.length ? `&& ${filters.join(" && ")}` : ""
   }]{
@@ -92,39 +103,31 @@ export async function RealEstateList(props: RealEstateListProps) {
   try {
     const estates: EstateCard[] = await client.fetch(query);
 
-    // If no estates are found, return a message
-    if (estates.length === 0) {
-      return (
-        <section className="px-16 max-w-[1600px] mx-auto pb-24 pt-48">
-          <EstateListFilter />
-          <div className="text-center">
-            <h2>No real estate items found</h2>
-            <p>Try adjusting your filters or come back later!</p>
-          </div>
-        </section>
-      );
-    }
-
-    // If estates are found, render the client component
     return (
       <section className="px-16 max-w-[1600px] mx-auto pb-24 pt-48">
         <EstateListFilter />
-        <EstateDisplay estates={estates} />
+        {estates.length > 0 ? (
+          <EstateDisplay estates={estates} />
+        ) : (
+          <div className="text-center">
+            <h2>Keine Immobilien gefunden</h2>
+            <p>Versuche, deine Filter anzupassen, oder komme später wieder!</p>
+          </div>
+        )}
       </section>
     );
   } catch (error) {
-    // Log the error to the console for detailed inspection
-    console.error("Error fetching real estate data:", error);
-
-    // Show an error message to the user
+    console.error("Fehler beim Laden der Immobiliendaten:", error);
     const errorMessage =
-      error instanceof Error ? error.message : "An unknown error occurred";
+      error instanceof Error
+        ? error.message
+        : "Ein unbekannter Fehler ist aufgetreten";
 
     return (
       <section className="px-16 max-w-[1600px] mx-auto pt-48 pb-24 relative">
         <EstateListFilter />
         <div className="text-center text-red-500">
-          <h2>Something went wrong</h2>
+          <h2>Etwas ist schief gelaufen</h2>
           <p>{errorMessage}</p>
         </div>
       </section>

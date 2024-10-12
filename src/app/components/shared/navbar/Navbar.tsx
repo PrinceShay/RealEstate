@@ -18,7 +18,7 @@ export default function Navbar() {
         <nav>
           <ul className="flex gap-1 items-center">
             <li>
-              <NavLink title={"Kaufen"} link={"/"} />
+              <NavLink title={"Kaufen"} link={"/immobilien"} />
             </li>
             <li>
               <NavLink
