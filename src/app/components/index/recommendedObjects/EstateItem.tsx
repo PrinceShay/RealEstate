@@ -1,4 +1,5 @@
 import { urlFor } from "@/sanity/lib/image";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -8,9 +9,11 @@ function EstateItem({ estate }: { estate: any }) {
     <Link href={`/immobilien/${estate.slug.current}`}>
       <div className="group ">
         <div className="aspect-square rounded-xl overflow-hidden">
-          <img
+          <Image
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
             src={urlFor(estate.firstImage).url()}
+            width={512}
+            height={512}
             alt={estate.title}
           />
         </div>

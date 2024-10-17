@@ -15,12 +15,13 @@ import { ScrollTrigger } from "gsap/all";
 
 export default function Features() {
   const FeatureContainer = useRef<HTMLElement>(null);
+  gsap.registerPlugin(ScrollTrigger);
 
   useGSAP(
     () => {
       if (!FeatureContainer.current) return;
 
-      let tl = gsap.timeline({
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: FeatureContainer.current,
           start: "top bottom",

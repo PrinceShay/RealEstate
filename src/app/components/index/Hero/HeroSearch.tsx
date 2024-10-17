@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Select, { SingleValue, StylesConfig } from "react-select";
+import Select, { StylesConfig } from "react-select";
 import { MapPin, Home, Euro, Search } from "lucide-react";
 import { client } from "@/app/lib/sanityClient";
 
@@ -19,19 +19,19 @@ const customStyles: StylesConfig<OptionType, false> = {
     minWidth: "6em",
     width: "12em",
   }),
-  input: (base, state) => ({
+  input: (base) => ({
     ...base,
     color: "white",
   }),
-  singleValue: (base, state) => ({
+  singleValue: (base) => ({
     ...base,
     color: "white",
   }),
-  placeholder: (base, state) => ({
+  placeholder: (base) => ({
     ...base,
     color: "white",
   }),
-  menu: (base, state) => ({
+  menu: (base) => ({
     ...base,
     color: "black",
   }),
