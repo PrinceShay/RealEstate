@@ -9,25 +9,44 @@ import {
   Staging,
 } from "./featureItems/FeatureLib";
 
-// import { useGSAP } from "@gsap/react";
-// import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 
 export default function Features() {
-  const FeatureContainer = useRef(null);
+  const FeatureContainer = useRef<HTMLElement>(null);
 
-  // useGSAP(
-  //   () => {
-  //     let tl = gsap.timeline();
+  useGSAP(
+    () => {
+      if (!FeatureContainer.current) return;
 
-  //     tl.from(".js-featureItemContainer", {
-  //       scale: 0,
-  //       opacity: 0,
-  //       ease: "power4.out",
-  //       stagger: 0.5,
-  //     });
-  //   },
-  //   { scope: FeatureContainer }
-  // );
+      let tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: FeatureContainer.current,
+          start: "top bottom",
+          markers: true,
+        },
+      });
+
+      if (FeatureContainer.current.children) {
+        tl.fromTo(
+          ".js-featureItemContainer",
+          {
+            scale: 0,
+            opacity: 0,
+          },
+          {
+            scale: 1,
+            opacity: 1,
+            ease: "power4.out",
+            duration: 1.5,
+            stagger: { amount: 0.5 },
+          }
+        );
+      }
+    },
+    { scope: FeatureContainer }
+  );
 
   return (
     <section

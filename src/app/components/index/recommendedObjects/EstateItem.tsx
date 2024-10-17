@@ -16,7 +16,7 @@ function EstateItem({ estate }: { estate: any }) {
         </div>
         <div className="mt-5 flex flex-col gap-2">
           <p>{estate.place.name}</p>
-          <p className="text-lg">{estate.title}</p>
+          <p className="text-lg min-h-16">{estate.title}</p>
           <div className="flex justify-between">
             <p className="text-xl">{formattedNumber} €</p>
             <p>{estate.area} m²</p>

@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export const Bewertung = () => {
   return (
-    <div className="relative bg-gradient-to-br group dark:from-gray-dark dark:to-gray-darker from-gray-lighter to-gray-lighter  dark:text-gray-lightest flex flex-col justify-end  h-full min-h-[50vh] w-full p-12">
+    <div className="relative bg-gradient-to-br group dark:from-gray-dark dark:to-gray-darker from-gray-lightest to-gray-lighter  dark:text-gray-lightest flex flex-col justify-end  h-full min-h-[50vh] w-full p-12">
       <div>
         <Image
           src={"/images/index/Features/Desktop - 1.jpg"}
@@ -33,7 +33,7 @@ export const Bewertung = () => {
 
 export const Marketing = () => {
   return (
-    <div className=" bg-gradient-to-br dark:from-gray-dark dark:to-gray-darker from-gray-lighter to-gray-lighter  dark:text-gray-lightest h-full min-h-[33vh] w-full p-12 relative group">
+    <div className=" bg-gradient-to-br dark:from-gray-dark dark:to-gray-darker from-gray-lightest to-gray-lighter  dark:text-gray-lightest h-full min-h-[33vh] w-full p-12 relative group">
       <h2 className="text-3xl group-hover:opacity-0 transition-opacity ease-out duration-300">
         Vermarktung von Immobilien
       </h2>
@@ -58,7 +58,7 @@ export const Marketing = () => {
 
 export const Expose = () => {
   return (
-    <div className="relative bg-gradient-to-br dark:from-gray-dark dark:to-gray-darker from-gray-lighter to-gray-lighter  dark:text-gray-lightest flex flex-col justify-end items-center group h-full min-h-[50vh] w-full p-12">
+    <div className="relative bg-gradient-to-br dark:from-gray-dark dark:to-gray-darker from-gray-lightest to-gray-lighter  dark:text-gray-lightest flex flex-col justify-end items-center group h-full min-h-[50vh] w-full p-12">
       <Image
         src={"/images/index/Features/expose.png"}
         alt="Exposé"
@@ -85,7 +85,7 @@ export const Staging = () => {
   return (
     <div className="relative flex flex-col justify-end h-full min-h-[50vh] w-full group">
       <div className="w-full h-full absolute z-10">
-        <div className="w-full h-full absolute bg-gradient-to-t group-hover:opacity-0 transition-opacity ease-out duration-300 dark:from-gray-dark from-gray-lighter to-transparent z-20"></div>
+        <div className="w-full h-full absolute bg-gradient-to-t group-hover:opacity-0 transition-opacity ease-out duration-300 dark:from-gray-dark from-gray-lightest to-transparent z-20"></div>
         <video
           className="w-full h-full object-cover z-10"
           autoPlay
@@ -138,7 +138,7 @@ export const Finazierung = () => {
   return (
     <div
       onMouseEnter={handleMouseEnter}
-      className="bg-gradient-to-br dark:from-gray-dark dark:to-gray-darker from-gray-lighter to-gray-lighter group dark:text-gray-lightest flex flex-col justify-end items-center h-full min-h-[50vh] w-full p-12"
+      className="bg-gradient-to-br dark:from-gray-dark dark:to-gray-darker from-gray-lightest to-gray-lighter group dark:text-gray-lightest flex flex-col justify-end items-center h-full min-h-[50vh] w-full p-12"
     >
       <div
         className="w-72 h-72 aspect-square flex items-center justify-center flex-grow group-hover:scale-110 transition-transform ease-out duration-300"

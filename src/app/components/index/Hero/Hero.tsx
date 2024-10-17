@@ -4,8 +4,8 @@ import HeroSearch from "./HeroSearch";
 
 function Hero() {
   return (
-    <section className="h-screen p-16">
-      <div className="relative w-full h-full  rounded-xl flex items-end justify-center">
+    <section className="h-screen w-full p-8">
+      <div className="relative w-full h-full  rounded-2xl flex items-end justify-center">
         <div className=" p-24 relative w-full h-full flex flex-col items-center justify-end z-20">
           <div className=" flex flex-col text-center text-white mb-12">
             <h1 className="text-7xl font-medium mb-4">Ich bin eine Headline</h1>
@@ -13,7 +13,7 @@ function Hero() {
           </div>
           <HeroSearch />
         </div>
-        <div className=" w-full h-full absolute z-10 bg-gradient-to-t from-gray-darker"></div>
+        <div className=" w-full h-full rounded-2xl absolute z-10 bg-gradient-to-t from-gray-darker"></div>
         <Image
           src={"/images/index/Hero.jpg"}
           alt="Hero"

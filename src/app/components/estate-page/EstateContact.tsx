@@ -8,7 +8,7 @@ export default function EstateContact({ estate }: { estate: FullEstate }) {
   const profileImage = estate.agent.profileImage;
   return (
     <div>
-      <aside className="sticky top-48 flex flex-col items-center place-self-end gap-8 bg-gray-lighter dark:bg-gray-darker p-12 rounded-2xl">
+      <aside className="sticky top-48 flex flex-col items-center place-self-end gap-8 bg-gray-lightest dark:bg-gray-darker p-12 rounded-2xl">
         <div className="flex flex-col items-center gap-4">
           <Image
             src={urlFor(profileImage).url()}

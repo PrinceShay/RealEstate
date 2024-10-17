@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`antialiased bg-gray-lightest dark:bg-gray-darkest dark:text-gray-lightest transition-colors`}
+        className={`antialiased  dark:bg-gray-darkest dark:text-gray-lightest transition-colors`}
       >
         <Navbar />
         {children}

@@ -18,7 +18,7 @@ export default function EstateDetails({ estate }: { estate: FullEstate }) {
           {estate.features.map((feature) => (
             <div
               key={feature._id}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-lighter dark:bg-gray-darker rounded-full"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-lightest dark:bg-gray-darker rounded-full"
             >
               {feature.name || "untitled"}
             </div>
