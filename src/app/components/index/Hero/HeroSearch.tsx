@@ -10,7 +10,7 @@ type OptionType = { label: string; value: string };
 
 // Shared styles for the Select components
 const customStyles: StylesConfig<OptionType, false> = {
-  control: (base, state) => ({
+  control: (base) => ({
     ...base,
     backgroundColor: "transparent",
     border: "none",
