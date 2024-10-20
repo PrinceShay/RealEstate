@@ -1,4 +1,4 @@
-import { House, Lightbulb, Plus, Search, UserRound } from "lucide-react";
+import { House, Lightbulb, Search, UserRound } from "lucide-react";
 import React from "react";
 import MobileNavItem from "./MobileNavItem";
 
