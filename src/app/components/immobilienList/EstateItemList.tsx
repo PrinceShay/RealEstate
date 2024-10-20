@@ -70,15 +70,15 @@ export default function EstateItemList({ estate }: EstateItemListProps) {
   };
 
   return (
-    <div className="w-full bg-white dark:bg-gray-darker grid grid-cols-3 gap-8 p-6 group rounded-2xl ">
+    <div className="w-full bg-white dark:bg-gray-darker sm:grid flex flex-col grid-cols-1 sm:grid-cols-3 gap-8 p-6 group rounded-2xl ">
       <div className="flex flex-col h-full gap-3">
         <Link
           href={`/immobilien/${estate.slug.current}`}
-          className="aspect-video bg-gray-100 rounded-xl overflow-hidden relative"
+          className="aspect-square object-cover sm:object-contain sm:aspect-video bg-gray-100 rounded-xl overflow-hidden relative w-full"
         >
           {estate.firstImage && (
             <Image
-              className="group-hover:scale-110 transition-transform duration-700 ease-out"
+              className="group-hover:scale-110 transition-transform duration-700 ease-out object-cover "
               src={urlFor(estate.firstImage).url()}
               alt={estate.title}
               fill
@@ -118,7 +118,7 @@ export default function EstateItemList({ estate }: EstateItemListProps) {
           <PortableText value={estate.description} components={components} />
         </div>
 
-        <div className="flex gap-2 text-sm">
+        <div className="flex gap-2 text-sm w-full overflow-auto">
           {estate.features
             ?.slice(0, 6)
             .map((feature: Feature, index: number) => (

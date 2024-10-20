@@ -16,7 +16,7 @@ const customStyles: StylesConfig<OptionType, false> = {
     border: "none",
     boxShadow: "none",
     color: "white",
-    minWidth: "6em",
+    minWidth: window.innerWidth <= 768 ? "100%" : "4em",
     width: "12em",
   }),
   input: (base) => ({
@@ -128,7 +128,7 @@ export default function HeroSearch() {
   };
 
   return (
-    <div className="bg-white bg-opacity-15 max-w-[1600px] p-6 text-white rounded-3xl flex items-center justify-between gap-6 backdrop-blur-md">
+    <div className="bg-white bg-opacity-15 max-w-[1600px] p-6 text-white rounded-3xl w-full sm:w-auto flex flex-col sm:flex-row items-center justify-between gap-6 backdrop-blur-md">
       {/* Location and Range */}
       <div className="flex items-center gap-2 rounded-lg px-4 py-2 border border-white border-opacity-65 hover:border-opacity-100 transition-all bg-transparent">
         <MapPin className="text-white" />
@@ -146,6 +146,7 @@ export default function HeroSearch() {
           id="range"
           options={rangeOptions}
           value={range}
+          className="hidden sm:block"
           onChange={(option) => setRange(option!)}
           isClearable={false}
           isSearchable={false}
@@ -155,7 +156,7 @@ export default function HeroSearch() {
       </div>
 
       {/* Property Type */}
-      <div className="flex h-full items-center gap-2 rounded-lg px-4 py-2 border border-white border-opacity-65 hover:border-opacity-100 transition-all bg-transparent">
+      <div className="sm:flex h-full items-center gap-2 rounded-lg px-4 py-2 border border-white border-opacity-65 hover:border-opacity-100 transition-all bg-transparent hidden">
         <Home className="text-white" />
         <Select
           id="type"
@@ -186,7 +187,7 @@ export default function HeroSearch() {
 
       {/* Search Button */}
       <button
-        className="h-full bg-mintGreen-light dark:bg-mintGreen-dark dark:hover:bg-mintGreen-darkHover text-foreground px-7 rounded-lg flex items-center gap-2 hover:bg-mintGreen-dark transition-all ease-out"
+        className="h-full py-5 sm:py-0 bg-mintGreen-light dark:bg-mintGreen-dark dark:hover:bg-mintGreen-darkHover text-foreground px-7 rounded-lg flex items-center gap-2 hover:bg-mintGreen-dark transition-all ease-out"
         onClick={handleSearch}
       >
         <Search />

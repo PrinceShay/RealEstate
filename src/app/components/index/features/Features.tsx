@@ -29,22 +29,20 @@ export default function Features() {
         },
       });
 
-      if (FeatureContainer.current.children) {
-        tl.fromTo(
-          ".js-featureItemContainer",
-          {
-            scale: 0,
-            opacity: 0,
-          },
-          {
-            scale: 1,
-            opacity: 1,
-            ease: "power4.out",
-            duration: 1.5,
-            stagger: { amount: 0.5 },
-          }
-        );
-      }
+      tl.fromTo(
+        ".js-featureItemContainer",
+        {
+          scale: 0,
+          opacity: 0,
+        },
+        {
+          scale: 1,
+          opacity: 1,
+          ease: "power4.out",
+          duration: 1.5,
+          stagger: { amount: 0.5 },
+        }
+      );
     },
     { scope: FeatureContainer }
   );
@@ -52,26 +50,26 @@ export default function Features() {
   return (
     <section
       ref={FeatureContainer}
-      className="min-h-screen px-16 max-w-[1600px] mx-auto py-24 grid grid-cols-12 grid-rows-3 gap-6"
+      className="min-h-screen px-4 sm:px-16 max-w-[1600px] mx-auto py-24 grid grid-cols-1 sm:grid-cols-12 grid-rows-3 gap-6"
     >
       <FeatureItemContainer
-        className="js-featureItemContainer row-span-1 col-span-4"
+        className="js-featureItemContainer row-span-1 sm:col-span-4"
         content={<Marketing />}
       />
       <FeatureItemContainer
-        className="js-featureItemContainer row-span-1 col-span-8"
+        className="js-featureItemContainer row-span-1 sm:col-span-8"
         content={<Bewertung />}
       />
       <FeatureItemContainer
-        className="js-featureItemContainer row-span-1 col-span-6"
+        className="js-featureItemContainer row-span-1 sm:col-span-6"
         content={<Expose />}
       />
       <FeatureItemContainer
-        className="js-featureItemContainer row-span-1 col-span-6"
+        className="js-featureItemContainer row-span-1 sm:col-span-6"
         content={<Finazierung />}
       />
       <FeatureItemContainer
-        className="js-featureItemContainer row-span-1 col-span-12"
+        className="js-featureItemContainer row-span-1 sm:col-span-12"
         content={<Staging />}
       />
     </section>

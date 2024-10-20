@@ -3,12 +3,12 @@ import SecondaryButton from "../../shared/ui/SecondaryButton";
 
 export default function AboutUsIndex() {
   return (
-    <section className="px-16 max-w-[1600px] mx-auto py-24 grid grid-cols-12 border-t border-gray-dark dark:border-gray-light">
+    <section className="px-4 sm:px-16 max-w-[1600px] mx-auto py-24 grid grid-cols-1 gap-12 sm:grid-cols-12  border-t border-gray-dark dark:border-gray-light">
       <div className="col-span-6">
         <p className="text-mintGreen-light dark:text-mintGreen-dark">
           Über uns
         </p>
-        <h1 className="Headline-md ">Was uns ausmacht</h1>
+        <h1 className="Headline-md leading-tight">Was uns ausmacht</h1>
       </div>
       <div className="col-span-6 text-lg">
         <p className="mb-4">

@@ -145,11 +145,11 @@ export default function EstateListFilter() {
   }, [searchParams]);
 
   return (
-    <div className="bg-white border border-gray-light dark:border-gray-dark dark:bg-gray-darker p-4 rounded-md mb-8 sticky top-36 z-20 ">
+    <div className="bg-white border border-gray-light dark:border-gray-dark dark:bg-gray-darker p-4 rounded-md mb-8 sm:sticky sm:top-36 z-20 ">
       <h2 className="text-xl font-semibold mb-4">Filter</h2>
       <div className="flex flex-wrap items-center gap-4">
         {/* Location Filter */}
-        <div className="flex items-center gap-2">
+        <div className="hidden sm:flex items-center gap-2">
           <MapPin strokeWidth={1.5} />
           <Select
             id="location"
@@ -163,7 +163,7 @@ export default function EstateListFilter() {
         </div>
 
         {/* Type Filter */}
-        <div className="flex items-center gap-2">
+        <div className="hidden sm:flex items-center gap-2">
           <Home strokeWidth={1.5} />
           <Select
             id="type"
@@ -183,7 +183,7 @@ export default function EstateListFilter() {
         </div>
 
         {/* Price Filter */}
-        <div className="flex items-center gap-2">
+        <div className="hidden sm:flex items-center gap-2">
           <Euro strokeWidth={1.5} />
           <Select
             id="price"

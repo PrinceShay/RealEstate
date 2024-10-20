@@ -10,7 +10,7 @@ import FavoriteButton from "./FavoriteButton";
 
 export default function Navbar() {
   return (
-    <div className="fixed  px-16 mt-12 z-50 w-full">
+    <div className="hidden sm:block fixed  px-16 mt-12 z-50 w-full">
       <div className=" max-w-[800px] mx-auto pl-8 pr-3 border border-gray-light dark:border-gray-dark flex items-center justify-between py-3 bg-white dark:bg-gray-darkest rounded-full shadow-2xl ">
         <Link className="font-bold" href={"/"}>
           Home<span className="font-medium">Finder</span>

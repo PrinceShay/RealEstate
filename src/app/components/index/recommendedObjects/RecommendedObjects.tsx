@@ -25,16 +25,18 @@ const RecommendedObjects = async () => {
   const estates: EstateCard[] = await getData();
 
   return (
-    <section className="px-16 max-w-[1600px] mx-auto py-24">
+    <section className="px-4 sm:px-16 max-w-[1600px] mx-auto py-24">
       <div className="text-center">
-        <h1 className="Headline-md mb-6">Vorgestellte Immobilien</h1>
+        <h1 className="Headline-md mb-6 leading-tight">
+          Vorgestellte Immobilien
+        </h1>
         <p>
           UBBS is vastly experienced at working across sectors – Residential,
           Hospitality and Commercial, and across disciplines – Architecture and
           Interior Design.
         </p>
       </div>
-      <div className="grid grid-cols-3 gap-12 mt-24">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 mt-24">
         {estates.map((estate) => (
           <Suspense key={estate.slug} fallback={<EstateItemLoader />}>
             <EstateItem estate={estate} key={estate.slug} />

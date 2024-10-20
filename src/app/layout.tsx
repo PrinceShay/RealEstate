@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/shared/navbar/Navbar";
+import MobileNav from "./components/shared/navbar/MobileNav";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,6 +19,7 @@ export default function RootLayout({
         className={`antialiased  dark:bg-gray-darkest dark:text-gray-lightest transition-colors`}
       >
         <Navbar />
+        <MobileNav />
         {children}
       </body>
     </html>

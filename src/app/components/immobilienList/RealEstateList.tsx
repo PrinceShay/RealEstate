@@ -104,7 +104,7 @@ export default async function RealEstateList({
     const estates: EstateCard[] = await client.fetch(query);
 
     return (
-      <section className="px-16 max-w-[1600px] mx-auto pb-24 pt-48">
+      <section className="px-4 max-w-[1600px] mx-auto pb-24 pt-12 sm:pt-48">
         <EstateListFilter />
         {estates.length > 0 ? (
           <EstateDisplay estates={estates} />
@@ -124,7 +124,7 @@ export default async function RealEstateList({
         : "Ein unbekannter Fehler ist aufgetreten";
 
     return (
-      <section className="px-16 max-w-[1600px] mx-auto pt-48 pb-24 relative">
+      <section className="px-4 sm:px-16 max-w-[1600px] mx-auto pt-48 pb-24 relative">
         <EstateListFilter />
         <div className="text-center text-red-500">
           <h2>Etwas ist schief gelaufen</h2>

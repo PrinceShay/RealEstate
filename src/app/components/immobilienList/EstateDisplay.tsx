@@ -42,7 +42,7 @@ export default function EstateDisplay({ estates }: EstateDisplayProps) {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-12">
           {estates.map((estate) => (
             <EstateItem key={estate.slug} estate={estate} />
           ))}
