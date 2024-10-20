@@ -16,7 +16,7 @@ const customStyles: StylesConfig<OptionType, false> = {
     border: "none",
     boxShadow: "none",
     color: "white",
-    minWidth: window.innerWidth <= 768 ? "100%" : "4em",
+    minWidth: "4em",
     width: "12em",
   }),
   input: (base) => ({
