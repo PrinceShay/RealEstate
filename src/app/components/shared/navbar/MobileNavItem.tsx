@@ -46,10 +46,15 @@ export default function MobileNavItem({ title, link, icon }: Props) {
             Hier findest du verschiedene Einstellungen
           </DrawerDescription>
         </DrawerHeader>
-        <div className="w-full flex-row justify-center">
-          <ThemeToggle />
-          <ThemeToggle />
-          <FavoriteButton />
+        <div className="w-full flex flex-row justify-center gap-4 items-center">
+          <div className="flex flex-col justify-center items-center text-sm">
+            <ThemeToggle />
+            Farbmodus
+          </div>
+          <div className="flex flex-col justify-center items-center text-sm">
+            <FavoriteButton />
+            Favoriten
+          </div>
         </div>
 
         <DrawerFooter>

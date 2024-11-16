@@ -25,7 +25,7 @@ export default function EstateDetails({ estate }: { estate: FullEstate }) {
           ))}
         </div>
       ) : null}
-      <ul className="grid grid-cols-3 gap-12 grid-flow-row mt-12 text-lg">
+      <ul className="grid grid-cols-2 sm:grid-cols-3 gap-12 grid-flow-row mt-12 text-lg">
         <li className="flex flex-col items-center text-center gap-2 justify-center">
           <Maximize2 size={48} />
           Wohnfläche: {estate.area} m²

@@ -17,7 +17,7 @@ export default function EstateDisplay({ estates }: EstateDisplayProps) {
   };
 
   return (
-    <div>
+    <div className="col-span-2">
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
           <Switch onCheckedChange={toggleViewMode} />

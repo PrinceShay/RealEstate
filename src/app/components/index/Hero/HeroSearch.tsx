@@ -16,6 +16,7 @@ const customStyles: StylesConfig<OptionType, false> = {
     border: "none",
     boxShadow: "none",
     color: "white",
+
     minWidth: "4em",
     width: "12em",
   }),
@@ -139,6 +140,7 @@ export default function HeroSearch() {
           onChange={(option) => setAddress(option)}
           isClearable
           placeholder="Ort"
+          className="cursor-text"
           isSearchable
           styles={customStyles}
         />
@@ -171,7 +173,7 @@ export default function HeroSearch() {
       </div>
 
       {/* Price Filter */}
-      <div className="flex h-full items-center gap-2 px-4 py-2 border border-white border-opacity-65 hover:border-opacity-100 bg-transparent">
+      <div className="flex h-full items-center gap-2 px-4 py-2 rounded-lg border border-white border-opacity-65 hover:border-opacity-100 bg-transparent">
         <Euro className="text-white" />
         <Select
           id="price"

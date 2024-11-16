@@ -104,12 +104,12 @@ export default async function RealEstateList({
     const estates: EstateCard[] = await client.fetch(query);
 
     return (
-      <section className="px-4 max-w-[1600px] mx-auto pb-24 pt-12 sm:pt-48">
+      <section className="px-4 max-w-[1600px] sm:grid grid-cols-3 gap-12 mx-auto pb-24 pt-12 sm:pt-48">
         <EstateListFilter />
         {estates.length > 0 ? (
           <EstateDisplay estates={estates} />
         ) : (
-          <div className="text-center">
+          <div className="text-center col-span-2">
             <h2>Keine Immobilien gefunden</h2>
             <p>Versuche, deine Filter anzupassen, oder komme später wieder!</p>
           </div>

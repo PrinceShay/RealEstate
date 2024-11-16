@@ -25,7 +25,6 @@ export default function Features() {
         scrollTrigger: {
           trigger: FeatureContainer.current,
           start: "top bottom",
-          markers: true,
         },
       });
 

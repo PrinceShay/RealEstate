@@ -18,7 +18,6 @@ export default function ProgressItem() {
           trigger: ProgressItem.current,
           start: "left 100%",
           end: "left 0%",
-          markers: true,
         },
       });
 

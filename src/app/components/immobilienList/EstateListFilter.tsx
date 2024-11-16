@@ -1,30 +1,31 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Select, { MultiValue } from "react-select";
+import Select, {
+  MultiValue,
+  SingleValue,
+  ActionMeta,
+  StylesConfig,
+  GroupBase,
+} from "react-select";
 import { client } from "@/app/lib/sanityClient";
 import { useRouter, useSearchParams } from "next/navigation";
-import { MapPin, Home, Euro, Filter } from "lucide-react"; // Icons
-
-// Import shadcn Dialog components
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogClose,
-} from "@/components/ui/dialog";
+import { MapPin, Home, Euro, Layers, DoorOpen, Maximize2 } from "lucide-react"; // Icons
 
 // Import shadcn Button component
 import { Button } from "@/components/ui/button";
 
-// Function to fetch features from Sanity
-async function getFeatures() {
+// Definiere einen gemeinsamen Typ für Optionen
+type Option = {
+  label: string;
+  value: string;
+};
+
+// Funktion zum Abrufen von Features aus Sanity
+async function getFeatures(): Promise<Option[]> {
   const query = `*[_type == "estateFeatures"] {
-  name
-}`;
+    name
+  }`;
   const features = await client.fetch(query);
 
   return features.map((feature: { name: string }) => ({
@@ -33,15 +34,15 @@ async function getFeatures() {
   }));
 }
 
-// Function to fetch location options (from HeroSearch)
-async function getLocations() {
+// Funktion zum Abrufen von Standortoptionen
+async function getLocations(): Promise<Option[]> {
   const query = `*[_type == "realEstate"]{
     place->{
       name, 
     },
   }`;
   const locations = await client.fetch(query);
-  // Filter to remove duplicate place names
+  // Entferne doppelte Ortsnamen
   const uniqueLocations = locations.filter(
     (location: { place: { name: string } }, index: number, self: any[]) =>
       index === self.findIndex((loc) => loc.place.name === location.place.name)
@@ -53,43 +54,92 @@ async function getLocations() {
   }));
 }
 
+// Custom styles for react-select to support dark mode with updated color
+const PRIMARY_COLOR = "#85C7AE";
+
+const customSelectStyles: StylesConfig<Option, boolean> = {
+  control: (provided, state) => ({
+    ...provided,
+    backgroundColor:
+      "var(--tw-bg-opacity, 1) rgb(31 41 55 / var(--tw-bg-opacity))", // dark:bg-gray-darker equivalent
+    color: "white",
+    borderColor: state.isFocused ? PRIMARY_COLOR : "#4b5563", // Updated border color on focus
+    "&:hover": {
+      borderColor: PRIMARY_COLOR,
+    },
+    boxShadow: state.isFocused ? `0 0 0 1px ${PRIMARY_COLOR}` : "none", // Updated box shadow on focus
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: "rgb(31 41 55)", // dark:bg-gray-darker equivalent
+    color: "white",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isFocused
+      ? PRIMARY_COLOR // Updated background color on focus
+      : state.isSelected
+        ? PRIMARY_COLOR // Updated background color on selection
+        : "transparent",
+    color: state.isFocused || state.isSelected ? "white" : "gray",
+    "&:active": {
+      backgroundColor: PRIMARY_COLOR, // Updated active background color
+      color: "white",
+    },
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "white",
+  }),
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: PRIMARY_COLOR, // Updated multi-value background color
+  }),
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: "white",
+  }),
+  multiValueRemove: (provided) => ({
+    ...provided,
+    color: "white",
+    "&:hover": {
+      backgroundColor: PRIMARY_COLOR,
+      // Updated multi-value remove hover background color
+      color: "white",
+    },
+  }),
+};
+
 export default function EstateListFilter() {
-  // States for the main filters
-  const [location, setLocation] = useState<{
-    label: string;
-    value: string;
-  } | null>(null);
-  const [type, setType] = useState<{ label: string; value: string } | null>({
+  // Hauptfilter-Zustände
+  const [location, setLocation] = useState<Option | null>(null);
+  const [type, setType] = useState<Option | null>({
     label: "Beliebig",
     value: "any",
   });
-  const [price, setPrice] = useState<{ label: string; value: string } | null>({
+  const [price, setPrice] = useState<Option | null>({
     label: "Beliebig",
     value: "any",
   });
 
-  // States for the additional filters (inside the dialog)
-  const [roomsFrom, setRoomsFrom] = useState<string>("");
-  const [roomsTo, setRoomsTo] = useState<string>("");
-  const [areaFrom, setAreaFrom] = useState<string>("");
-  const [areaTo, setAreaTo] = useState<string>("");
-  const [selectedFeatures, setSelectedFeatures] = useState<
-    MultiValue<{ label: string; value: string }>
-  >([]);
-  const [featureOptions, setFeatureOptions] = useState<
-    { label: string; value: string }[]
-  >([]);
+  // Zusätzliche Filter-Zustände
+  const [roomsFrom, setRoomsFrom] = useState<number>(0);
+  const [roomsTo, setRoomsTo] = useState<number>(0);
+  const [areaFrom, setAreaFrom] = useState<number>(0);
+  const [areaTo, setAreaTo] = useState<number>(0);
+  const [selectedFeatures, setSelectedFeatures] = useState<MultiValue<Option>>(
+    []
+  );
+  const [featureOptions, setFeatureOptions] = useState<Option[]>([]);
 
-  // States for options
-  const [locationOptions, setLocationOptions] = useState<
-    { label: string; value: string }[]
-  >([]);
+  // Optionen-Zustände
+  const [locationOptions, setLocationOptions] = useState<Option[]>([]);
 
   const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Fetch features and locations from Sanity
+    // Abrufen von Features und Standorten aus Sanity
     async function fetchData() {
       const [featuresData, locationsData] = await Promise.all([
         getFeatures(),
@@ -101,199 +151,315 @@ export default function EstateListFilter() {
     fetchData();
   }, []);
 
-  // Function to handle filter submission
+  // Funktion zur Handhabung der Filteranwendung
   const handleFilter = () => {
     const query = new URLSearchParams({
       location: location?.value || "",
       type: type?.value || "any",
       price: price?.value || "any",
-      roomsFrom: roomsFrom || "",
-      roomsTo: roomsTo || "",
-      areaFrom: areaFrom || "",
-      areaTo: areaTo || "",
+      roomsFrom: roomsFrom > 0 ? roomsFrom.toString() : "",
+      roomsTo: roomsTo > 0 ? roomsTo.toString() : "",
+      areaFrom: areaFrom > 0 ? areaFrom.toString() : "",
+      areaTo: areaTo > 0 ? areaTo.toString() : "",
       features: selectedFeatures.map((f) => f.value).join(",") || "",
     });
 
-    // Navigate to the same page with updated query parameters
+    // Navigiere zur gleichen Seite mit aktualisierten Query-Parametern
     router.push(`/immobilien?${query.toString()}`);
   };
 
-  // Initialize filters from URL query parameters
+  // Initialisiere Filter aus URL-Query-Parametern
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
+
     const loc = params.get("location");
     if (loc) {
       setLocation({ label: loc, value: loc });
     }
+
     const t = params.get("type") || "any";
     setType({ label: t, value: t });
+
     const p = params.get("price") || "any";
     setPrice({ label: p, value: p });
 
-    setRoomsFrom(params.get("roomsFrom") || "");
-    setRoomsTo(params.get("roomsTo") || "");
-    setAreaFrom(params.get("areaFrom") || "");
-    setAreaTo(params.get("areaTo") || "");
+    const roomsF = params.get("roomsFrom");
+    setRoomsFrom(roomsF ? parseInt(roomsF) : 0);
+
+    const roomsT = params.get("roomsTo");
+    setRoomsTo(roomsT ? parseInt(roomsT) : 0);
+
+    const areaF = params.get("areaFrom");
+    setAreaFrom(areaF ? parseInt(areaF) : 0);
+
+    const areaT = params.get("areaTo");
+    setAreaTo(areaT ? parseInt(areaT) : 0);
+
     const features = params.get("features");
     if (features) {
-      const featuresArray = features.split(",").map((feature) => ({
-        label: feature,
-        value: feature,
-      }));
-      setSelectedFeatures(featuresArray);
+      const featuresArray: Option[] = features.split(",").map(
+        (feature): Option => ({
+          label: feature,
+          value: feature,
+        })
+      );
+      setSelectedFeatures(featuresArray as MultiValue<Option>);
     }
   }, [searchParams]);
 
+  // Funktionen zum Inkrementieren und Dekrementieren der Zahlwerte
+  const increment = (setter: React.Dispatch<React.SetStateAction<number>>) => {
+    setter((prev) => prev + 1);
+  };
+
+  const decrement = (
+    setter: React.Dispatch<React.SetStateAction<number>>,
+    current: number
+  ) => {
+    if (current > 0) {
+      setter((prev) => prev - 1);
+    }
+  };
+
   return (
-    <div className="bg-white border border-gray-light dark:border-gray-dark dark:bg-gray-darker p-4 rounded-md mb-8 sm:sticky sm:top-36 z-20 ">
-      <h2 className="text-xl font-semibold mb-4">Filter</h2>
-      <div className="flex flex-wrap items-center gap-4">
-        {/* Location Filter */}
-        <div className="hidden sm:flex items-center gap-2">
-          <MapPin strokeWidth={1.5} />
-          <Select
-            id="location"
-            options={locationOptions}
-            value={location}
-            onChange={(selectedOption) => setLocation(selectedOption)}
-            isClearable
-            placeholder="Ort"
-            className="min-w-[150px] "
-          />
-        </div>
+    <div className="bg-white border border-gray-light dark:border-gray-dark dark:bg-gray-darker p-6 rounded-md mb-8 sm:sticky sm:top-36 z-20 self-start">
+      <h2 className="text-2xl font-semibold mb-6">Filter</h2>
 
-        {/* Type Filter */}
-        <div className="hidden sm:flex items-center gap-2">
-          <Home strokeWidth={1.5} />
-          <Select
-            id="type"
-            options={[
-              { label: "Beliebig", value: "any" },
-              { label: "Haus kaufen", value: "buy house" },
-              { label: "Wohnung kaufen", value: "buy apartment" },
-              { label: "Wohnung mieten", value: "rent apartment" },
-              { label: "Land kaufen", value: "buy land" },
-            ]}
-            value={type}
-            onChange={(selectedOption) => setType(selectedOption)}
-            isClearable={false}
-            placeholder="Beliebig"
-            className="min-w-[150px]"
-          />
-        </div>
+      {/* Standort-Filter */}
+      <div className="mb-6">
+        <label className="mb-2 flex items-center gap-2">
+          <MapPin strokeWidth={1.5} /> Ort
+        </label>
+        <Select<Option, false, GroupBase<Option>>
+          id="location"
+          options={locationOptions}
+          value={location}
+          onChange={(
+            selectedOption: SingleValue<Option>,
+            _actionMeta: ActionMeta<Option>
+          ) => setLocation(selectedOption)}
+          isClearable
+          placeholder="Ort auswählen"
+          className="w-full"
+          styles={customSelectStyles}
+        />
+      </div>
 
-        {/* Price Filter */}
-        <div className="hidden sm:flex items-center gap-2">
-          <Euro strokeWidth={1.5} />
-          <Select
-            id="price"
-            options={[
-              { label: "Beliebig", value: "any" },
-              { label: "Bis zu 100,000€", value: "100000" },
-              { label: "Bis zu 200,000€", value: "200000" },
-              { label: "Bis zu 400,000€", value: "400000" },
-              { label: "Bis zu 500,000€", value: "500000" },
-              { label: "Bis zu 1,000,000€", value: "1000000" },
-            ]}
-            value={price}
-            onChange={(selectedOption) => setPrice(selectedOption)}
-            isClearable={false}
-            placeholder="Preis"
-            className="min-w-[150px]"
-          />
-        </div>
+      {/* Typ-Filter */}
+      <div className="mb-6">
+        <label className="mb-2 flex items-center gap-2">
+          <Home strokeWidth={1.5} /> Typ
+        </label>
+        <Select<Option, false, GroupBase<Option>>
+          id="type"
+          options={[
+            { label: "Beliebig", value: "any" },
+            { label: "Haus kaufen", value: "buy house" },
+            { label: "Wohnung kaufen", value: "buy apartment" },
+            { label: "Wohnung mieten", value: "rent apartment" },
+            { label: "Land kaufen", value: "buy land" },
+          ]}
+          value={type}
+          onChange={(
+            selectedOption: SingleValue<Option>,
+            _actionMeta: ActionMeta<Option>
+          ) => setType(selectedOption)}
+          isClearable={false}
+          placeholder="Typ auswählen"
+          className="w-full"
+          styles={customSelectStyles}
+        />
+      </div>
 
-        {/* More Filters Button */}
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button
-              variant="outline"
-              className="flex items-center gap-2 bg-transparent dark:border-gray-light dark:hover:bg-gray-dark"
+      {/* Preis-Filter */}
+      <div className="mb-6">
+        <label className="mb-2 flex items-center gap-2">
+          <Euro strokeWidth={1.5} /> Preis
+        </label>
+        <Select<Option, false, GroupBase<Option>>
+          id="price"
+          options={[
+            { label: "Beliebig", value: "any" },
+            { label: "Bis zu 100.000€", value: "100000" },
+            { label: "Bis zu 200.000€", value: "200000" },
+            { label: "Bis zu 400.000€", value: "400000" },
+            { label: "Bis zu 500.000€", value: "500000" },
+            { label: "Bis zu 1.000.000€", value: "1000000" },
+          ]}
+          value={price}
+          onChange={(
+            selectedOption: SingleValue<Option>,
+            _actionMeta: ActionMeta<Option>
+          ) => setPrice(selectedOption)}
+          isClearable={false}
+          placeholder="Preis auswählen"
+          className="w-full"
+          styles={customSelectStyles}
+        />
+      </div>
+
+      {/* Zimmer-Bereichs-Filter */}
+      <div className="mb-6">
+        <label className="mb-2 flex items-center gap-2">
+          <DoorOpen strokeWidth={1.5} /> Zimmer
+        </label>
+        <div className="flex items-center gap-4">
+          {/* Von */}
+          <div className="flex items-center border rounded dark:bg-gray-dark">
+            <button
+              type="button"
+              onClick={() => decrement(setRoomsFrom, roomsFrom)}
+              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
+              aria-label="Zimmer von verringern"
             >
-              <Filter strokeWidth={1.5} />
-              Weitere Filter
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Weitere Filter</DialogTitle>
-            </DialogHeader>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              {/* Rooms Range Filter */}
-              <div className="col-span-2">
-                <label className="block mb-1">Zimmer</label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="number"
-                    value={roomsFrom}
-                    onChange={(e) => setRoomsFrom(e.target.value)}
-                    className="w-full border p-2 rounded dark:bg-gray-dark"
-                    placeholder="egal"
-                  />
-                  –
-                  <input
-                    type="number"
-                    value={roomsTo}
-                    onChange={(e) => setRoomsTo(e.target.value)}
-                    className="w-full border p-2 rounded dark:bg-gray-dark"
-                    placeholder="egal"
-                  />
-                </div>
-              </div>
+              -
+            </button>
+            <input
+              type="string"
+              value={roomsFrom}
+              onChange={(e) => setRoomsFrom(parseInt(e.target.value) || 0)}
+              className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
+              placeholder="von"
+              min={0}
+              inputMode="numeric"
+              pattern="[0-9]*"
+            />
+            <button
+              type="button"
+              onClick={() => increment(setRoomsFrom)}
+              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
+              aria-label="Zimmer von erhöhen"
+            >
+              +
+            </button>
+          </div>
 
-              {/* Area Range Filter */}
-              <div className="col-span-2">
-                <label className="block mb-1">Fläche</label>
-                <div className="flex gap-2 items-center">
-                  <input
-                    type="number"
-                    value={areaFrom}
-                    onChange={(e) => setAreaFrom(e.target.value)}
-                    className="w-full border p-2 rounded dark:bg-gray-dark"
-                    placeholder="egal"
-                  />
-                  –
-                  <input
-                    type="number"
-                    value={areaTo}
-                    onChange={(e) => setAreaTo(e.target.value)}
-                    className="w-full border p-2 rounded dark:bg-gray-dark"
-                    placeholder="egal"
-                  />
-                </div>
-              </div>
+          <span className="mx-2">–</span>
 
-              {/* Features Multi-Select Filter */}
-              <div className="md:col-span-2">
-                <label className="block mb-1">Ausstattung</label>
-                <Select
-                  options={featureOptions}
-                  value={selectedFeatures}
-                  onChange={(selectedOptions) =>
-                    setSelectedFeatures(selectedOptions || [])
-                  }
-                  isMulti
-                  placeholder="Ausstattung auswählen"
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="secondary">Schließen</Button>
-              </DialogClose>
-              <Button
-                onClick={() => {
-                  handleFilter();
-                }}
-              >
-                Filter anwenden
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+          {/* Bis */}
+          <div className="flex items-center border rounded dark:bg-gray-dark">
+            <button
+              type="button"
+              onClick={() => decrement(setRoomsTo, roomsTo)}
+              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
+              aria-label="Zimmer bis verringern"
+            >
+              -
+            </button>
+            <input
+              type="string"
+              value={roomsTo}
+              onChange={(e) => setRoomsTo(parseInt(e.target.value) || 0)}
+              className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
+              placeholder="bis"
+              min={0}
+              inputMode="numeric"
+              pattern="[0-9]*"
+            />
+            <button
+              type="button"
+              onClick={() => increment(setRoomsTo)}
+              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
+              aria-label="Zimmer bis erhöhen"
+            >
+              +
+            </button>
+          </div>
+        </div>
+      </div>
 
-        {/* Apply Filters Button */}
-        <Button onClick={handleFilter} className="ml-auto">
+      {/* Fläche-Bereichs-Filter */}
+      <div className="mb-6">
+        <label className="mb-2 flex items-center gap-2">
+          <Maximize2 strokeWidth={1.5} /> Fläche (m²)
+        </label>
+        <div className="flex items-center gap-4">
+          {/* Von */}
+          <div className="flex items-center border rounded dark:bg-gray-dark">
+            <button
+              type="button"
+              onClick={() => decrement(setAreaFrom, areaFrom)}
+              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
+              aria-label="Fläche von verringern"
+            >
+              -
+            </button>
+            <input
+              type="string"
+              value={areaFrom}
+              onChange={(e) => setAreaFrom(parseInt(e.target.value) || 0)}
+              className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
+              placeholder="von"
+              min={0}
+              inputMode="numeric"
+              pattern="[0-9]*"
+            />
+            <button
+              type="button"
+              onClick={() => increment(setAreaFrom)}
+              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
+              aria-label="Fläche von erhöhen"
+            >
+              +
+            </button>
+          </div>
+
+          <span className="mx-2">–</span>
+
+          {/* Bis */}
+          <div className="flex items-center border rounded dark:bg-gray-dark">
+            <button
+              type="button"
+              onClick={() => decrement(setAreaTo, areaTo)}
+              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
+              aria-label="Fläche bis verringern"
+            >
+              -
+            </button>
+            <input
+              type="string"
+              value={areaTo}
+              onChange={(e) => setAreaTo(parseInt(e.target.value) || 0)}
+              className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
+              placeholder="bis"
+              min={0}
+              inputMode="numeric"
+              pattern="[0-9]*"
+            />
+            <button
+              type="button"
+              onClick={() => increment(setAreaTo)}
+              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
+              aria-label="Fläche bis erhöhen"
+            >
+              +
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Ausstattung Multi-Select-Filter */}
+      <div className="mb-6">
+        <label className="mb-2 flex items-center gap-2">
+          <Layers strokeWidth={1.5} /> Ausstattung
+        </label>
+        <Select<Option, true, GroupBase<Option>>
+          options={featureOptions}
+          value={selectedFeatures}
+          onChange={(
+            selectedOptions: MultiValue<Option>,
+            _actionMeta: ActionMeta<Option>
+          ) => setSelectedFeatures(selectedOptions)}
+          isMulti
+          placeholder="Ausstattung auswählen"
+          className="w-full"
+          styles={customSelectStyles}
+        />
+      </div>
+
+      {/* Filter anwenden Button */}
+      <div className="flex justify-end">
+        <Button onClick={handleFilter} className="w-full sm:w-auto">
           Filter anwenden
         </Button>
       </div>

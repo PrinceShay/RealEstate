@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { Camera } from "lucide-react";
@@ -13,6 +13,18 @@ export default function EstateHero({ estate }: { estate: FullEstate }) {
   const firstImage = estate.gallery[0]?.asset;
   const priceNumber = estate.price.toLocaleString(undefined);
   const imageCount = estate.gallery.length;
+
+  useEffect(() => {
+    if (isLightboxOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = ""; // Cleanup on component unmount
+    };
+  }, [isLightboxOpen]);
 
   const openLightbox = (index: number) => {
     setCurrentImageIndex(index);
@@ -37,7 +49,7 @@ export default function EstateHero({ estate }: { estate: FullEstate }) {
 
   return (
     <header>
-      <div className="w-full aspect-video rounded-2xl relative overflow-clip flex flex-col justify-end items-start p-6">
+      <div className="w-full sm:aspect-video aspect-[4/5] rounded-2xl relative overflow-clip flex flex-col justify-end items-start p-2 sm:p-6">
         <Image
           alt={estate.title}
           src={urlFor(firstImage).url()}
@@ -47,7 +59,7 @@ export default function EstateHero({ estate }: { estate: FullEstate }) {
         {imageCount > 1 ? (
           <div
             onClick={() => openLightbox(0)}
-            className="relative flex items-center gap-2 bg-gray-lightest dark:text-gray-lightest dark:bg-gray-darker p-5 rounded-xl cursor-pointer hover:bg-gray-lighter dark:hover:bg-gray-dark transition-colors ease-out"
+            className="relative text-xs sm:text-md flex items-center gap-2 bg-gray-lightest dark:text-gray-lightest dark:bg-gray-darker p-3 sm:p-5 rounded-xl cursor-pointer hover:bg-gray-lighter dark:hover:bg-gray-dark transition-colors ease-out"
           >
             <Camera /> Alle {imageCount} Bilder ansehen
           </div>
@@ -55,27 +67,35 @@ export default function EstateHero({ estate }: { estate: FullEstate }) {
       </div>
       <div className="my-6">
         <h1 className="text-3xl">{estate.title}</h1>
-        <div className="flex gap-12 mt-4 border-b pb-8 border-gray-dark dark:border-gray-light">
+        <div className="flex gap-12 w-full overflow-auto mt-8 border-b pb-8 border-gray-dark dark:border-gray-light">
           <div className="flex flex-col gap-1">
-            <div className="text-2xl font-semibold">{priceNumber} €</div>
+            <div className="text-xl text-nowrap sm:text-2xl font-semibold">
+              {priceNumber} €
+            </div>
             <div className="text-sm text-gray-dark dark:text-gray-light opacity-80">
               Kaufpreis
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <div className="text-2xl font-semibold">{estate.rooms}</div>
+            <div className="text-xl text-nowrap sm:text-2xl font-semibold">
+              {estate.rooms}
+            </div>
             <div className="text-sm text-gray-dark dark:text-gray-light opacity-80">
               Zimmer
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <div className="text-2xl font-semibold">{estate.area} m²</div>
+            <div className="text-xl text-nowrap sm:text-2xl font-semibold">
+              {estate.area} m²
+            </div>
             <div className="text-sm text-gray-dark dark:text-gray-light opacity-80">
               Wohnfläche
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <div className="text-2xl font-semibold">{estate.plotSize} m²</div>
+            <div className="text-xl text-nowrap sm:text-2xl font-semibold">
+              {estate.plotSize} m²
+            </div>
             <div className="text-sm text-gray-dark dark:text-gray-light opacity-80">
               Grundstück
             </div>
@@ -85,7 +105,7 @@ export default function EstateHero({ estate }: { estate: FullEstate }) {
 
       {/* Lightbox */}
       {isLightboxOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 w-screen h-screen">
           <div className="relative max-w-full max-h-full flex flex-col items-center">
             {/* Schließen-Button */}
             <button

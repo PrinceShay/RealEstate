@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="de">
       <body
         className={`antialiased  dark:bg-gray-darkest dark:text-gray-lightest transition-colors`}
       >
@@ -24,13 +24,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
-
-{
-  /* <div className="flex gap-2">
-        <Switch onCheckedChange={toggleViewMode} />
-        <label>
-          {viewMode === "list" ? "Switch to Grid View" : "Switch to List View"}
-        </label>
-      </div> */
 }

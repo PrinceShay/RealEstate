@@ -20,7 +20,6 @@ export default function Progress() {
           trigger: ProgressContainer.current,
           start: "0% 0%",
           end: "100% 0%",
-          markers: true,
           scrub: true,
         },
       });
