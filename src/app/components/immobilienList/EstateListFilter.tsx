@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Select, {
   MultiValue,
   SingleValue,
-  ActionMeta,
   StylesConfig,
   GroupBase,
 } from "react-select";
