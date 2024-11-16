@@ -234,10 +234,9 @@ export default function EstateListFilter() {
           id="location"
           options={locationOptions}
           value={location}
-          onChange={(
-            selectedOption: SingleValue<Option>,
-            _actionMeta: ActionMeta<Option>
-          ) => setLocation(selectedOption)}
+          onChange={(selectedOption: SingleValue<Option>) =>
+            setLocation(selectedOption)
+          }
           isClearable
           placeholder="Ort auswählen"
           className="w-full"
@@ -260,10 +259,9 @@ export default function EstateListFilter() {
             { label: "Land kaufen", value: "buy land" },
           ]}
           value={type}
-          onChange={(
-            selectedOption: SingleValue<Option>,
-            _actionMeta: ActionMeta<Option>
-          ) => setType(selectedOption)}
+          onChange={(selectedOption: SingleValue<Option>) =>
+            setType(selectedOption)
+          }
           isClearable={false}
           placeholder="Typ auswählen"
           className="w-full"
@@ -287,10 +285,9 @@ export default function EstateListFilter() {
             { label: "Bis zu 1.000.000€", value: "1000000" },
           ]}
           value={price}
-          onChange={(
-            selectedOption: SingleValue<Option>,
-            _actionMeta: ActionMeta<Option>
-          ) => setPrice(selectedOption)}
+          onChange={(selectedOption: SingleValue<Option>) =>
+            setPrice(selectedOption)
+          }
           isClearable={false}
           placeholder="Preis auswählen"
           className="w-full"
@@ -446,10 +443,9 @@ export default function EstateListFilter() {
         <Select<Option, true, GroupBase<Option>>
           options={featureOptions}
           value={selectedFeatures}
-          onChange={(
-            selectedOptions: MultiValue<Option>,
-            _actionMeta: ActionMeta<Option>
-          ) => setSelectedFeatures(selectedOptions)}
+          onChange={(selectedOptions: MultiValue<Option>) =>
+            setSelectedFeatures(selectedOptions)
+          }
           isMulti
           placeholder="Ausstattung auswählen"
           className="w-full"

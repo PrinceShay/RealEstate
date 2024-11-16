@@ -8,7 +8,6 @@ import { useGSAP } from "@gsap/react";
 
 function Hero() {
   const [isSplit, setSplit] = useState(false);
-  const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   const heroHeadline = useRef<HTMLHeadingElement>(null);
   const heroParagraph = useRef(null);
@@ -70,7 +69,7 @@ function Hero() {
               ref={heroHeadline}
               className="split text-5xl sm:text-7xl font-medium mb-4 hyphens-auto"
             >
-              Finden Sie Ihr Traum &shy;zuhause
+              Finden Sie Ihr Traum&shy;zuhause
             </h1>
             <p ref={heroParagraph} className="split text-xl">
               Entdecken Sie unsere exklusiven Immobilienangebote und finden Sie
