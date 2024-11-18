@@ -1,7 +1,7 @@
 export default {
     name: 'estateType',
     title: 'Art der Immobilie',
-    type: 'object',
+    type: 'document',
     fields: [
       {
         name: 'name',

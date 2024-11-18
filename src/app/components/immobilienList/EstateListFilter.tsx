@@ -9,10 +9,25 @@ import Select, {
 } from "react-select";
 import { client } from "@/app/lib/sanityClient";
 import { useRouter, useSearchParams } from "next/navigation";
-import { MapPin, Home, Euro, Layers, DoorOpen, Maximize2 } from "lucide-react"; // Icons
+import {
+  MapPin,
+  Euro,
+  Home,
+  Layers,
+  DoorOpen,
+  Maximize2,
+  SlidersVertical,
+} from "lucide-react"; // Icons
 
-// Import shadcn Button component
+// Import shadcn Button and Sheet components
 import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"; // Stelle sicher, dass diese Komponenten existieren
 
 // Definiere einen gemeinsamen Typ für Optionen
 type Option = {
@@ -112,16 +127,16 @@ const customSelectStyles: StylesConfig<Option, boolean> = {
 export default function EstateListFilter() {
   // Hauptfilter-Zustände
   const [location, setLocation] = useState<Option | null>(null);
-  const [type, setType] = useState<Option | null>({
-    label: "Beliebig",
-    value: "any",
-  });
   const [price, setPrice] = useState<Option | null>({
     label: "Beliebig",
     value: "any",
   });
 
   // Zusätzliche Filter-Zustände
+  const [type, setType] = useState<Option | null>({
+    label: "Beliebig",
+    value: "any",
+  });
   const [roomsFrom, setRoomsFrom] = useState<number>(0);
   const [roomsTo, setRoomsTo] = useState<number>(0);
   const [areaFrom, setAreaFrom] = useState<number>(0);
@@ -243,31 +258,6 @@ export default function EstateListFilter() {
         />
       </div>
 
-      {/* Typ-Filter */}
-      <div className="mb-6">
-        <label className="mb-2 flex items-center gap-2">
-          <Home strokeWidth={1.5} /> Typ
-        </label>
-        <Select<Option, false, GroupBase<Option>>
-          id="type"
-          options={[
-            { label: "Beliebig", value: "any" },
-            { label: "Haus kaufen", value: "buy house" },
-            { label: "Wohnung kaufen", value: "buy apartment" },
-            { label: "Wohnung mieten", value: "rent apartment" },
-            { label: "Land kaufen", value: "buy land" },
-          ]}
-          value={type}
-          onChange={(selectedOption: SingleValue<Option>) =>
-            setType(selectedOption)
-          }
-          isClearable={false}
-          placeholder="Typ auswählen"
-          className="w-full"
-          styles={customSelectStyles}
-        />
-      </div>
-
       {/* Preis-Filter */}
       <div className="mb-6">
         <label className="mb-2 flex items-center gap-2">
@@ -294,169 +284,391 @@ export default function EstateListFilter() {
         />
       </div>
 
-      {/* Zimmer-Bereichs-Filter */}
-      <div className="mb-6">
-        <label className="mb-2 flex items-center gap-2">
-          <DoorOpen strokeWidth={1.5} /> Zimmer
-        </label>
-        <div className="flex items-center gap-4">
-          {/* Von */}
-          <div className="flex items-center border rounded dark:bg-gray-dark">
-            <button
-              type="button"
-              onClick={() => decrement(setRoomsFrom, roomsFrom)}
-              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
-              aria-label="Zimmer von verringern"
+      {/* Mehr-Button für mobile Ansicht */}
+      <div className="mb-6 sm:hidden">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              variant="secondary"
+              className="w-full flex items-center justify-center"
             >
-              -
-            </button>
-            <input
-              type="string"
-              value={roomsFrom}
-              onChange={(e) => setRoomsFrom(parseInt(e.target.value) || 0)}
-              className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
-              placeholder="von"
-              min={0}
-              inputMode="numeric"
-              pattern="[0-9]*"
-            />
-            <button
-              type="button"
-              onClick={() => increment(setRoomsFrom)}
-              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
-              aria-label="Zimmer von erhöhen"
-            >
-              +
-            </button>
-          </div>
+              <SlidersVertical className="mr-2" /> Mehr Filter
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-full sm:w-80">
+            <SheetHeader>
+              <SheetTitle>Weitere Filter</SheetTitle>
+            </SheetHeader>
+            {/* Typ-Filter */}
+            <div className="mb-6">
+              <label className="mb-2 flex items-center gap-2">
+                <Home strokeWidth={1.5} /> Typ
+              </label>
+              <Select<Option, false, GroupBase<Option>>
+                id="type"
+                options={[
+                  { label: "Beliebig", value: "any" },
+                  { label: "Haus kaufen", value: "buy house" },
+                  { label: "Wohnung kaufen", value: "buy apartment" },
+                  { label: "Wohnung mieten", value: "rent apartment" },
+                  { label: "Land kaufen", value: "buy land" },
+                ]}
+                value={type}
+                onChange={(selectedOption: SingleValue<Option>) =>
+                  setType(selectedOption)
+                }
+                isClearable={false}
+                placeholder="Typ auswählen"
+                className="w-full"
+                styles={customSelectStyles}
+              />
+            </div>
 
-          <span className="mx-2">–</span>
+            {/* Zimmer-Bereichs-Filter */}
+            <div className="mb-6">
+              <label className="mb-2 flex items-center gap-2">
+                <DoorOpen strokeWidth={1.5} /> Zimmer
+              </label>
+              <div className="flex items-center gap-4">
+                {/* Von */}
+                <div className="flex items-center border rounded dark:bg-gray-dark">
+                  <button
+                    type="button"
+                    onClick={() => decrement(setRoomsFrom, roomsFrom)}
+                    className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
+                    aria-label="Zimmer von verringern"
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    value={roomsFrom}
+                    onChange={(e) =>
+                      setRoomsFrom(parseInt(e.target.value) || 0)
+                    }
+                    className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
+                    placeholder="von"
+                    min={0}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => increment(setRoomsFrom)}
+                    className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
+                    aria-label="Zimmer von erhöhen"
+                  >
+                    +
+                  </button>
+                </div>
 
-          {/* Bis */}
-          <div className="flex items-center border rounded dark:bg-gray-dark">
-            <button
-              type="button"
-              onClick={() => decrement(setRoomsTo, roomsTo)}
-              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
-              aria-label="Zimmer bis verringern"
-            >
-              -
-            </button>
-            <input
-              type="string"
-              value={roomsTo}
-              onChange={(e) => setRoomsTo(parseInt(e.target.value) || 0)}
-              className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
-              placeholder="bis"
-              min={0}
-              inputMode="numeric"
-              pattern="[0-9]*"
-            />
-            <button
-              type="button"
-              onClick={() => increment(setRoomsTo)}
-              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
-              aria-label="Zimmer bis erhöhen"
-            >
-              +
-            </button>
+                <span className="mx-2">–</span>
+
+                {/* Bis */}
+                <div className="flex items-center border rounded dark:bg-gray-dark">
+                  <button
+                    type="button"
+                    onClick={() => decrement(setRoomsTo, roomsTo)}
+                    className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
+                    aria-label="Zimmer bis verringern"
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    value={roomsTo}
+                    onChange={(e) => setRoomsTo(parseInt(e.target.value) || 0)}
+                    className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
+                    placeholder="bis"
+                    min={0}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => increment(setRoomsTo)}
+                    className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
+                    aria-label="Zimmer bis erhöhen"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Fläche-Bereichs-Filter */}
+            <div className="mb-6">
+              <label className="mb-2 flex items-center gap-2">
+                <Maximize2 strokeWidth={1.5} /> Fläche (m²)
+              </label>
+              <div className="flex items-center gap-4">
+                {/* Von */}
+                <div className="flex items-center border rounded dark:bg-gray-dark">
+                  <button
+                    type="button"
+                    onClick={() => decrement(setAreaFrom, areaFrom)}
+                    className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
+                    aria-label="Fläche von verringern"
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    value={areaFrom}
+                    onChange={(e) => setAreaFrom(parseInt(e.target.value) || 0)}
+                    className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
+                    placeholder="von"
+                    min={0}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => increment(setAreaFrom)}
+                    className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
+                    aria-label="Fläche von erhöhen"
+                  >
+                    +
+                  </button>
+                </div>
+
+                <span className="mx-2">–</span>
+
+                {/* Bis */}
+                <div className="flex items-center border rounded dark:bg-gray-dark">
+                  <button
+                    type="button"
+                    onClick={() => decrement(setAreaTo, areaTo)}
+                    className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
+                    aria-label="Fläche bis verringern"
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    value={areaTo}
+                    onChange={(e) => setAreaTo(parseInt(e.target.value) || 0)}
+                    className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
+                    placeholder="bis"
+                    min={0}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => increment(setAreaTo)}
+                    className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
+                    aria-label="Fläche bis erhöhen"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Ausstattung Multi-Select-Filter */}
+            <div className="mb-6">
+              <label className="mb-2 flex items-center gap-2">
+                <Layers strokeWidth={1.5} /> Ausstattung
+              </label>
+              <Select<Option, true, GroupBase<Option>>
+                options={featureOptions}
+                value={selectedFeatures}
+                onChange={(selectedOptions: MultiValue<Option>) =>
+                  setSelectedFeatures(selectedOptions)
+                }
+                isMulti
+                placeholder="Ausstattung auswählen"
+                className="w-full"
+                styles={customSelectStyles}
+              />
+            </div>
+
+            {/* Filter anwenden Button */}
+            <div className="flex justify-end">
+              <Button onClick={handleFilter} className="w-full sm:w-auto">
+                Filter anwenden
+              </Button>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      {/* Zusätzliche Filter für Desktop Ansicht */}
+      <div className="hidden sm:block">
+        {/* Typ-Filter */}
+        <div className="mb-6">
+          <label className="mb-2 flex items-center gap-2">
+            <Home strokeWidth={1.5} /> Typ
+          </label>
+          <Select<Option, false, GroupBase<Option>>
+            id="type"
+            options={[
+              { label: "Beliebig", value: "any" },
+              { label: "Haus kaufen", value: "buy house" },
+              { label: "Wohnung kaufen", value: "buy apartment" },
+              { label: "Wohnung mieten", value: "rent apartment" },
+              { label: "Land kaufen", value: "buy land" },
+            ]}
+            value={type}
+            onChange={(selectedOption: SingleValue<Option>) =>
+              setType(selectedOption)
+            }
+            isClearable={false}
+            placeholder="Typ auswählen"
+            className="w-full"
+            styles={customSelectStyles}
+          />
+        </div>
+
+        {/* Zimmer-Bereichs-Filter */}
+        <div className="mb-6">
+          <label className="mb-2 flex items-center gap-2">
+            <DoorOpen strokeWidth={1.5} /> Zimmer
+          </label>
+          <div className="flex items-center gap-4">
+            {/* Von */}
+            <div className="flex items-center border rounded dark:bg-gray-dark">
+              <button
+                type="button"
+                onClick={() => decrement(setRoomsFrom, roomsFrom)}
+                className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
+                aria-label="Zimmer von verringern"
+              >
+                -
+              </button>
+              <input
+                type="string"
+                value={roomsFrom}
+                onChange={(e) => setRoomsFrom(parseInt(e.target.value) || 0)}
+                className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
+                placeholder="von"
+                min={0}
+              />
+              <button
+                type="button"
+                onClick={() => increment(setRoomsFrom)}
+                className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
+                aria-label="Zimmer von erhöhen"
+              >
+                +
+              </button>
+            </div>
+
+            <span className="mx-2">–</span>
+
+            {/* Bis */}
+            <div className="flex items-center border rounded dark:bg-gray-dark">
+              <button
+                type="button"
+                onClick={() => decrement(setRoomsTo, roomsTo)}
+                className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
+                aria-label="Zimmer bis verringern"
+              >
+                -
+              </button>
+              <input
+                type="string"
+                value={roomsTo}
+                onChange={(e) => setRoomsTo(parseInt(e.target.value) || 0)}
+                className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
+                placeholder="bis"
+                min={0}
+              />
+              <button
+                type="button"
+                onClick={() => increment(setRoomsTo)}
+                className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
+                aria-label="Zimmer bis erhöhen"
+              >
+                +
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Fläche-Bereichs-Filter */}
-      <div className="mb-6">
-        <label className="mb-2 flex items-center gap-2">
-          <Maximize2 strokeWidth={1.5} /> Fläche (m²)
-        </label>
-        <div className="flex items-center gap-4">
-          {/* Von */}
-          <div className="flex items-center border rounded dark:bg-gray-dark">
-            <button
-              type="button"
-              onClick={() => decrement(setAreaFrom, areaFrom)}
-              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
-              aria-label="Fläche von verringern"
-            >
-              -
-            </button>
-            <input
-              type="string"
-              value={areaFrom}
-              onChange={(e) => setAreaFrom(parseInt(e.target.value) || 0)}
-              className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
-              placeholder="von"
-              min={0}
-              inputMode="numeric"
-              pattern="[0-9]*"
-            />
-            <button
-              type="button"
-              onClick={() => increment(setAreaFrom)}
-              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
-              aria-label="Fläche von erhöhen"
-            >
-              +
-            </button>
-          </div>
+        {/* Fläche-Bereichs-Filter */}
+        <div className="mb-6">
+          <label className="mb-2 flex items-center gap-2">
+            <Maximize2 strokeWidth={1.5} /> Fläche (m²)
+          </label>
+          <div className="flex items-center gap-4">
+            {/* Von */}
+            <div className="flex items-center border rounded dark:bg-gray-dark">
+              <button
+                type="button"
+                onClick={() => decrement(setAreaFrom, areaFrom)}
+                className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
+                aria-label="Fläche von verringern"
+              >
+                -
+              </button>
+              <input
+                type="string"
+                value={areaFrom}
+                onChange={(e) => setAreaFrom(parseInt(e.target.value) || 0)}
+                className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
+                placeholder="von"
+                min={0}
+              />
+              <button
+                type="button"
+                onClick={() => increment(setAreaFrom)}
+                className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
+                aria-label="Fläche von erhöhen"
+              >
+                +
+              </button>
+            </div>
 
-          <span className="mx-2">–</span>
+            <span className="mx-2">–</span>
 
-          {/* Bis */}
-          <div className="flex items-center border rounded dark:bg-gray-dark">
-            <button
-              type="button"
-              onClick={() => decrement(setAreaTo, areaTo)}
-              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
-              aria-label="Fläche bis verringern"
-            >
-              -
-            </button>
-            <input
-              type="string"
-              value={areaTo}
-              onChange={(e) => setAreaTo(parseInt(e.target.value) || 0)}
-              className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
-              placeholder="bis"
-              min={0}
-              inputMode="numeric"
-              pattern="[0-9]*"
-            />
-            <button
-              type="button"
-              onClick={() => increment(setAreaTo)}
-              className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
-              aria-label="Fläche bis erhöhen"
-            >
-              +
-            </button>
+            {/* Bis */}
+            <div className="flex items-center border rounded dark:bg-gray-dark">
+              <button
+                type="button"
+                onClick={() => decrement(setAreaTo, areaTo)}
+                className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-l"
+                aria-label="Fläche bis verringern"
+              >
+                -
+              </button>
+              <input
+                type="string"
+                value={areaTo}
+                onChange={(e) => setAreaTo(parseInt(e.target.value) || 0)}
+                className="w-16 text-center border-none focus:ring-0 dark:bg-gray-dark dark:text-gray-100"
+                placeholder="bis"
+                min={0}
+              />
+              <button
+                type="button"
+                onClick={() => increment(setAreaTo)}
+                className="px-2 py-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-r"
+                aria-label="Fläche bis erhöhen"
+              >
+                +
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Ausstattung Multi-Select-Filter */}
-      <div className="mb-6">
-        <label className="mb-2 flex items-center gap-2">
-          <Layers strokeWidth={1.5} /> Ausstattung
-        </label>
-        <Select<Option, true, GroupBase<Option>>
-          options={featureOptions}
-          value={selectedFeatures}
-          onChange={(selectedOptions: MultiValue<Option>) =>
-            setSelectedFeatures(selectedOptions)
-          }
-          isMulti
-          placeholder="Ausstattung auswählen"
-          className="w-full"
-          styles={customSelectStyles}
-        />
-      </div>
+        {/* Ausstattung Multi-Select-Filter */}
+        <div className="mb-6">
+          <label className="mb-2 flex items-center gap-2">
+            <Layers strokeWidth={1.5} /> Ausstattung
+          </label>
+          <Select<Option, true, GroupBase<Option>>
+            options={featureOptions}
+            value={selectedFeatures}
+            onChange={(selectedOptions: MultiValue<Option>) =>
+              setSelectedFeatures(selectedOptions)
+            }
+            isMulti
+            placeholder="Ausstattung auswählen"
+            className="w-full"
+            styles={customSelectStyles}
+          />
+        </div>
 
-      {/* Filter anwenden Button */}
-      <div className="flex justify-end">
-        <Button onClick={handleFilter} className="w-full sm:w-auto">
-          Filter anwenden
-        </Button>
+        {/* Filter anwenden Button */}
+        <div className="flex justify-end">
+          <Button onClick={handleFilter} className="w-full sm:w-auto">
+            Filter anwenden
+          </Button>
+        </div>
       </div>
     </div>
   );

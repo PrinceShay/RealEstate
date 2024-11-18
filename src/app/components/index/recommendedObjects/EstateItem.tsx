@@ -17,7 +17,7 @@ function EstateItem({ estate }: { estate: any }) {
             alt={estate.title}
           />
         </div>
-        <div className="mt-5 flex flex-col gap-2">
+        <div className="mt-5 flex flex-col gap-2 px-4 sm:px-0">
           <p>{estate.place.name}</p>
           <p className="text-lg min-h-16">{estate.title}</p>
           <div className="flex justify-between">

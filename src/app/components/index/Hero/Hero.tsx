@@ -71,7 +71,7 @@ function Hero() {
             >
               Finden Sie Ihr Traum&shy;zuhause
             </h1>
-            <p ref={heroParagraph} className="split text-xl">
+            <p ref={heroParagraph} className="split text-xl ">
               Entdecken Sie unsere exklusiven Immobilienangebote und finden Sie
               das perfekte Heim für Sie und Ihre Familie.
             </p>
