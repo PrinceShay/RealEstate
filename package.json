@@ -17,6 +17,7 @@
     "@radix-ui/react-scroll-area": "^1.2.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.1",
+    "@radix-ui/react-toast": "^1.2.2",
     "@sanity/assist": "^3.0.8",
     "@sanity/client": "^6.21.3",
     "@sanity/image-url": "^1.0.2",

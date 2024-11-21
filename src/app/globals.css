@@ -27,7 +27,7 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -53,7 +53,23 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
+  }
+}
+
+/* If the user prefers dark mode, 
+we of course apply color-scheme: dark, as usual */
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+/* If the user prefers light mode, 
+we still enforce color-scheme: dark, despite the user preference */
+@media (prefers-color-scheme: light) {
+  html {
+    color-scheme: dark;
   }
 }
 @layer base {
@@ -62,32 +78,32 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "Poppins", sans-serif; 
+    font-family: "Poppins", sans-serif;
   }
 }
 
-.Headline-xl{
+.Headline-xl {
   font-size: 5.61rem;
 }
 
-.Headline-lg{
+.Headline-lg {
   font-size: 4.209rem;
 }
 
-.Headline-md{
+.Headline-md {
   font-size: 3.157rem;
 }
 
-.Headline-sm{
+.Headline-sm {
   font-size: 2.369rem;
 }
 
-.Headline-xs{
+.Headline-xs {
   font-size: 1.777rem;
 }
 
-small{
+small {
   font-size: 0.75rem;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
