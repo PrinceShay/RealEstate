@@ -16,7 +16,6 @@ export default function Footer() {
         scrollTrigger: {
           trigger: FooterRef.current,
           start: "0% bottom",
-          markers: true,
           toggleActions: "play pause resume reset",
         },
         delay: 0.25,
