@@ -1,7 +1,7 @@
 import { EstateCard } from "@/app/lib/interface";
 import { client } from "@/app/lib/sanityClient";
 import EstateDisplay from "./EstateDisplay";
-import EstateListFilter from "./EstateListFilter";
+import EstateListFilter from "./filter/EstateListFilter";
 
 interface RealEstateListProps {
   searchParams: {

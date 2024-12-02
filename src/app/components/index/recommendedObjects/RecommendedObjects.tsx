@@ -12,7 +12,7 @@ const RecommendedObjects = async () => {
   const estates: EstateCard[] = await getData();
 
   return (
-    <section className="px-0 sm:px-16 max-w-[1600px] mx-auto py-24">
+    <section className="px-4 sm:px-16 max-w-[1600px] mx-auto py-24">
       <div className="text-center">
         <h1 className="Headline-md mb-6 leading-tight">
           Vorgestellte Immobilien

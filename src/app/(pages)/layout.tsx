@@ -4,6 +4,7 @@ import Navbar from "../components/shared/navbar/Navbar";
 import MobileNav from "../components/shared/navbar/MobileNav";
 import Footer from "../components/shared/footer/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import NavbarAlt from "../components/shared/navbar/NavbarAlt";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,7 +21,7 @@ export default function RootLayout({
       <body
         className={`antialiased  dark:bg-gray-darkest dark:text-gray-lightest transition-colors`}
       >
-        <Navbar />
+        <NavbarAlt />
         <MobileNav />
         <main>{children}</main>
         <Toaster />

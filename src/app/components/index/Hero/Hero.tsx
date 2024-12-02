@@ -61,7 +61,7 @@ function Hero() {
   );
 
   return (
-    <section className="h-auto sm:h-[100dvh] w-full px-4 pt-4 pb-24 sm:p-8">
+    <section className="h-auto sm:h-[100dvh] w-full px-4 pt-4 pb-24 sm:p-16 sm:pt-24">
       <div className="relative w-full h-full  rounded-2xl flex items-end justify-center">
         <div className="p-8 sm:p-36 relative w-full h-full flex flex-col items-center justify-end z-20">
           <div className=" flex flex-col text-center text-white mb-16">
@@ -70,7 +70,7 @@ function Hero() {
                 ref={heroHeadline}
                 className="split text-5xl sm:text-7xl font-medium mb-4 hyphens-auto"
               >
-                Finden Sie Ihr Traum&shy;zuhause
+                Finde dein Traum&shy;zuhause
               </h1>
             </div>
             <p ref={heroParagraph} className="split text-2xl ">

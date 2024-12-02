@@ -102,15 +102,17 @@ export default function EstateItemList({ estate }: EstateItemListProps) {
         href={`/immobilien/${estate.slug.current}`}
         className="col-span-2 flex flex-col items-start gap-2"
       >
-        <div className="flex gap-1 items-center text-gray-500 dark:text-gray-400">
-          <MapPin size={16} strokeWidth={2} /> {estate.place.name}
-        </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-4">
           {isNew && (
             <div className=" bg-mintGreen-light text-gray-darkest px-3 py-1 rounded-full text-sm">
               Neu
             </div>
           )}
+          <div className="flex gap-1 items-center text-gray-500 dark:text-gray-400">
+            <MapPin size={16} strokeWidth={2} /> {estate.place.name}
+          </div>
+        </div>
+        <div className="flex flex-col gap-2 items-start">
           <h1 className="text-2xl">{estate.title}</h1>
         </div>
 

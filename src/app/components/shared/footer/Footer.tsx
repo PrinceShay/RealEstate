@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import NewsletterForm from "./NewsletterForm";
 import Link from "next/link";
 import gsap from "gsap";
@@ -228,7 +228,7 @@ export default function Footer() {
             <div className="overflow-hidden">
               <div className="js-footerLinkWrap">
                 <Link
-                  className="text-x hover:text-mintGreen-light js-footerLink"
+                  className="text-xl hover:text-mintGreen-light js-footerLink"
                   href="/faq"
                 >
                   FAQ
