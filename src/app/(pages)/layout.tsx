@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "../globals.css";
-import Navbar from "../components/shared/navbar/Navbar";
 import MobileNav from "../components/shared/navbar/MobileNav";
 import Footer from "../components/shared/footer/Footer";
 import { Toaster } from "@/components/ui/toaster";

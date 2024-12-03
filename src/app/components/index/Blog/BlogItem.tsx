@@ -26,8 +26,8 @@ export default function BlogItem({ blog }: Props) {
                 </div>
               ))}
           </div>
-          <h1 className="text-2xl mb-3">{blog.title}</h1>
-          <p className="line-clamp-2 text-gray-light opacity-80">
+          <h1 className="text-2xl mb-4">{blog.title}</h1>
+          <p className="line-clamp-2 text-gray-light">
             {blog.content &&
               blog.content[0] &&
               blog.content[0].children[0].text}
