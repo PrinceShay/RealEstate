@@ -20,7 +20,9 @@ export const Bewertung = () => {
         <div className="w-3/4 h-1/2 bg-mintGreen-light absolute top-12 -right-12 rotate-6 blur-[256px] scale-50 opacity-35 group-hover:scale-100 group-hover:opacity-100 transition-all ease-out duration-300 "></div>
       </div>
       <div className="flex flex-col items-start relative z-20 group-hover:z-10 group-hover:opacity-0 ease-out transition-opacity duration-300">
-        <h2 className="text-4xl">Immobilienbewertung</h2>
+        <h2 className="text-4xl break-words hyphens-auto">
+          Immobilienbewertung
+        </h2>
         <p className="text-lg mt-6 opacity-80 max-w-prose mb-6">
           Erstellung von professionellen Marktanalysen, um den aktuellen Wert
           einer Immobilie zu ermitteln.
@@ -85,7 +87,7 @@ export const Staging = () => {
   return (
     <div className="relative flex flex-col justify-end h-full min-h-[50vh] w-full group">
       <div className="w-full h-full absolute z-10">
-        <div className="w-full h-full absolute bg-gradient-to-t group-hover:opacity-0 transition-opacity ease-out duration-300 dark:from-gray-dark from-gray-lightest to-transparent z-20"></div>
+        <div className="w-full h-full absolute bg-gradient-to-t group-hover:opacity-0 transition-opacity ease-out duration-300 dark:from-gray-dark from-gray-dark to-transparent z-20"></div>
         <video
           className="w-full h-full object-cover z-10"
           autoPlay
@@ -96,7 +98,7 @@ export const Staging = () => {
           <source src="/videos/Features/7578546-hd_1920_1080_30fps.webm" />
         </video>
       </div>
-      <div className="p-12 z-30 dark:text-gray-lightest group-hover:translate-y-6 group-hover:opacity-0 transition-all ease-out duration-300">
+      <div className="p-12 z-30 text-gray-lightest group-hover:translate-y-6 group-hover:opacity-0 transition-all ease-out duration-300">
         <h2 className="text-3xl relative">Home Staging</h2>
         <p className="text-lg mt-6 opacity-80 max-w-prose relative">
           Beratung und Unterstützung bei der optischen Aufbereitung der

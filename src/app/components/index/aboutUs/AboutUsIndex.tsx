@@ -8,7 +8,7 @@ export default function AboutUsIndex() {
         <p className="text-mintGreen-light dark:text-mintGreen-dark">
           Über uns
         </p>
-        <h1 className="Headline-md leading-tight">Was uns ausmacht</h1>
+        <h1 className="text-4xl sm:text-5xl leading-tight">Was uns ausmacht</h1>
       </div>
       <div className="col-span-6 text-lg">
         <p className="mb-4">

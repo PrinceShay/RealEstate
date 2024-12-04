@@ -21,7 +21,23 @@ export default function TestimonialSlider() {
     });
   });
   return (
-    <Swiper className="" spaceBetween={32} slidesPerView={3.5}>
+    <Swiper
+      className=""
+      spaceBetween={32}
+      slidesPerView={3.5}
+      breakpoints={{
+        // Ab einer Bildschirmbreite von 0px bis <640px (Mobile)
+        0: {
+          slidesPerView: 1.2,
+          spaceBetween: 16,
+        },
+        // Ab 640px (Tablet/Desktop)
+        640: {
+          slidesPerView: 3,
+          spaceBetween: 32,
+        },
+      }}
+    >
       <SwiperSlide className="js-swiperSlide">
         <TestimonialItem
           profileImagesrc="/images/index/Testimonials/FamBecker.jpg"

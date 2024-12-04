@@ -17,7 +17,7 @@ export default function TestimonialItem({
   location,
 }: Props) {
   return (
-    <div className="w-full h-full max-h-[60vh] bg-gray-dark dark:bg-gray-dark rounded-2xl aspect-[9/16] flex flex-col gap-8 p-8 ">
+    <div className="w-full h-full max-h-[60vh] bg-gray-dark dark:bg-gray-dark rounded-2xl aspect-[9/16] flex flex-col gap-8 p-8 overflow-auto ">
       {/* Profile Image */}
       <div className="w-[20%] overflow-hidden aspect-square rounded-full relative">
         <Image

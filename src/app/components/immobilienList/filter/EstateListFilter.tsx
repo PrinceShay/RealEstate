@@ -57,19 +57,19 @@ async function getLocations(): Promise<Option[]> {
 }
 
 const EstateListFilter: React.FC = () => {
-  // State, um den Dark Mode zu verfolgen
+  // State to track Dark Mode
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    // Funktion zum Überprüfen des Dark Mode-Status
+    // Function to check Dark Mode status
     const checkDarkMode = () => {
       setIsDark(document.documentElement.classList.contains("dark"));
     };
 
-    // Initialer Check
+    // Initial check
     checkDarkMode();
 
-    // Beobachten von Änderungen an den Klassen des <html>-Elements
+    // Observe changes to the <html> class list
     const observer = new MutationObserver(checkDarkMode);
     observer.observe(document.documentElement, {
       attributes: true,
@@ -80,12 +80,12 @@ const EstateListFilter: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Farbkonstanten basierend auf Dark Mode
-  const PRIMARY_COLOR = "#85C7AE"; // Beispiel: Orange für Dark Mode
-  const BG_COLOR = isDark ? "#212B30" : "white"; // Dunkler Hintergrund für Dark Mode
-  const FG_COLOR = isDark ? "white" : "#101419"; // Heller Vordergrund für Dark Mode
+  // Color constants based on Dark Mode
+  const PRIMARY_COLOR = "#85C7AE"; // Example color
+  const BG_COLOR = isDark ? "#212B30" : "white"; // Dark background for Dark Mode
+  const FG_COLOR = isDark ? "white" : "#101419"; // Light foreground for Dark Mode
 
-  // Dynamische benutzerdefinierte Styles für react-select
+  // Dynamic custom styles for react-select
   const customSelectStyles: StylesConfig<Option, boolean> = {
     control: (provided, state) => ({
       ...provided,
@@ -139,16 +139,10 @@ const EstateListFilter: React.FC = () => {
 
   // Main filter states
   const [location, setLocation] = useState<Option | null>(null);
-  const [price, setPrice] = useState<Option | null>({
-    label: "Beliebig",
-    value: "any",
-  });
+  const [price, setPrice] = useState<Option | null>(null);
 
   // Additional filter states
-  const [type, setType] = useState<Option | null>({
-    label: "Beliebig",
-    value: "any",
-  });
+  const [type, setType] = useState<Option | null>(null);
   const [roomsFrom, setRoomsFrom] = useState<number>(0);
   const [roomsTo, setRoomsTo] = useState<number>(0);
   const [areaFrom, setAreaFrom] = useState<number>(0);
@@ -179,16 +173,19 @@ const EstateListFilter: React.FC = () => {
 
   // Handle filter application
   const handleFilter = () => {
-    const query = new URLSearchParams({
-      location: location?.value || "",
-      type: type?.value || "any",
-      price: price?.value || "any",
-      roomsFrom: roomsFrom > 0 ? roomsFrom.toString() : "",
-      roomsTo: roomsTo > 0 ? roomsTo.toString() : "",
-      areaFrom: areaFrom > 0 ? areaFrom.toString() : "",
-      areaTo: areaTo > 0 ? areaTo.toString() : "",
-      features: selectedFeatures.map((f) => f.value).join(",") || "",
-    });
+    const query = new URLSearchParams();
+
+    if (location?.value) query.set("location", location.value);
+    if (type?.value) query.set("type", type.value);
+    if (price?.value && price.value !== "any")
+      query.set("priceTo", price.value);
+    if (roomsFrom > 0) query.set("roomsFrom", roomsFrom.toString());
+    if (roomsTo > 0) query.set("roomsTo", roomsTo.toString());
+    if (areaFrom > 0) query.set("areaFrom", areaFrom.toString());
+    if (areaTo > 0) query.set("areaTo", areaTo.toString());
+    if (selectedFeatures.length > 0) {
+      query.set("features", selectedFeatures.map((f) => f.value).join(","));
+    }
 
     // Navigate to the same page with updated query parameters
     router.push(`/immobilien?${query.toString()}`);
@@ -198,8 +195,8 @@ const EstateListFilter: React.FC = () => {
   const resetFilters = () => {
     // Set all filter states to their default values
     setLocation(null);
-    setPrice({ label: "Beliebig", value: "any" });
-    setType({ label: "Beliebig", value: "any" });
+    setPrice(null);
+    setType(null);
     setRoomsFrom(0);
     setRoomsTo(0);
     setAreaFrom(0);
@@ -212,40 +209,55 @@ const EstateListFilter: React.FC = () => {
 
   // Initialize filters from URL query parameters
   useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    const loc = params.get("location");
+    const loc = searchParams.get("location");
     if (loc) {
       setLocation({ label: loc, value: loc });
+    } else {
+      setLocation(null);
     }
 
-    const t = params.get("type") || "any";
-    setType({ label: t, value: t });
+    const t = searchParams.get("type");
+    if (t) {
+      setType({ label: t, value: t });
+    } else {
+      setType(null);
+    }
 
-    const p = params.get("price") || "any";
-    setPrice({ label: p, value: p });
+    const p = searchParams.get("priceTo");
+    if (p) {
+      const priceOption = {
+        label: `Bis zu ${p}€`,
+        value: p,
+      };
+      setPrice(priceOption);
+    } else {
+      setPrice(null);
+    }
 
-    const roomsF = params.get("roomsFrom");
+    // Handle roomsFrom and roomsTo
+    const roomsF = searchParams.get("roomsFrom");
     setRoomsFrom(roomsF ? parseInt(roomsF) : 0);
 
-    const roomsT = params.get("roomsTo");
+    const roomsT = searchParams.get("roomsTo");
     setRoomsTo(roomsT ? parseInt(roomsT) : 0);
 
-    const areaF = params.get("areaFrom");
+    // Handle areaFrom and areaTo
+    const areaF = searchParams.get("areaFrom");
     setAreaFrom(areaF ? parseInt(areaF) : 0);
 
-    const areaT = params.get("areaTo");
+    const areaT = searchParams.get("areaTo");
     setAreaTo(areaT ? parseInt(areaT) : 0);
 
-    const features = params.get("features");
+    // Handle features
+    const features = searchParams.get("features");
     if (features) {
-      const featuresArray: Option[] = features.split(",").map(
-        (feature): Option => ({
-          label: feature,
-          value: feature,
-        })
-      );
-      setSelectedFeatures(featuresArray as MultiValue<Option>);
+      const featuresArray = features.split(",").map((feature) => ({
+        label: feature,
+        value: feature,
+      }));
+      setSelectedFeatures(featuresArray);
+    } else {
+      setSelectedFeatures([]);
     }
   }, [searchParams]);
 

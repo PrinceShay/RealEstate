@@ -14,7 +14,7 @@ const RecommendedObjects = async () => {
   return (
     <section className="px-4 sm:px-16 max-w-[1600px] mx-auto py-24">
       <div className="text-center">
-        <h1 className="Headline-md mb-6 leading-tight">
+        <h1 className="text-4xl sm:text-5xl mb-6 leading-tight">
           Vorgestellte Immobilien
         </h1>
         <p className="text-lg max-w-4xl mx-auto">

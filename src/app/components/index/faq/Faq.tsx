@@ -50,7 +50,9 @@ export default function Faq() {
     <section className="px-4 sm:px-16 max-w-[1600px] mx-auto py-24 grid grid-cols-1 gap-12 sm:grid-cols-12">
       <div className="col-span-6">
         <p>FAQ</p>
-        <h1 className="Headline-md leading-tight">Oft gestellte Fragen</h1>
+        <h1 className="text-4xl sm:text-5xl leading-tight">
+          Oft gestellte Fragen
+        </h1>
       </div>
       <div className="col-span-6 text-lg flex flex-col gap-4">
         {questions.map((question) => (

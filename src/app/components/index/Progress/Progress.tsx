@@ -30,7 +30,7 @@ export default function Progress() {
   return (
     <section className=" relative bg-gray-darkest dark:bg-gray-darker text-gray-lightest py-48 ">
       <div className="pl-4 sm:pl-64 relative mb-16 max-w-screen overflow-hidden">
-        <h1 className="Headline-md mb-6">Ablauf</h1>
+        <h1 className="text-4xl sm:text-5xl mb-6">Ablauf</h1>
         <p className="text-lg mb-16">
           UBBS is vastly experienced at working across sectors – Residential,
           Hospitality and Commercial, and across disciplines – Architecture and

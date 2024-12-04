@@ -8,7 +8,7 @@ export default function Testimonial() {
         <p className="text-mintGreen-light dark:text-mintGreen-dark">
           Kundenmeinungen
         </p>
-        <h1 className="Headline-md leading-tight">
+        <h1 className="text-4xl sm:text-5xl leading-tight">
           Glaube nicht nur uns –<br /> höre, was unsere Kunden sagen!
         </h1>
       </div>

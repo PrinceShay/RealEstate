@@ -42,8 +42,8 @@ export default function NavbarAlt() {
   return (
     <div>
       <div
-        className={`
-          px-4 py-4 sm:px-16 w-full grid grid-cols-3 items-center fixed top-0 z-[80] 
+        className={`hidden sm:grid
+          px-4 py-4 sm:px-16 w-full grid-cols-3 items-center fixed top-0 z-[80] 
           transition-all duration-500 ease-out
           ${isScrolled ? "bg-white dark:bg-gray-darkest shadow-xl" : "bg-transparent"}
           ${isVisible ? "translate-y-0" : "-translate-y-full"}

@@ -28,7 +28,7 @@ export default async function BlogSection() {
     <section className="px-4 sm:px-16 max-w-[1600px] mx-auto py-24">
       <div className="text-center mb-24">
         <h1 className="text-mintGreen-light text-lg">Immobilien-Ratgeber</h1>
-        <p className="Headline-md mb-6 leading-tight">
+        <p className="text-4xl sm:text-5xl mb-8 leading-tight break-words hyphens-auto">
           Dein Wissensvorsprung rund um Immobilien
         </p>
         <p className="text-lg max-w-4xl mx-auto">

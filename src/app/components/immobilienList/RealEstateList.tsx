@@ -23,11 +23,14 @@ function getFirstParam(
   }
 }
 
+// Damit die Komponente bei Änderungen der searchParams neu rendert
+export const dynamic = "force-dynamic";
+
 export default async function RealEstateList({
   searchParams,
 }: RealEstateListProps) {
   const location = getFirstParam(searchParams.location);
-  const type = getFirstParam(searchParams.type, "any");
+  const type = getFirstParam(searchParams.type);
   const priceFrom = getFirstParam(searchParams.priceFrom);
   const priceTo = getFirstParam(searchParams.priceTo);
   const roomsFrom = getFirstParam(searchParams.roomsFrom);
@@ -47,18 +50,18 @@ export default async function RealEstateList({
   };
 
   if (location) filters.push(`place->name match "${location}"`);
-  if (type !== "any") {
+  if (type) {
     const mappedType = typeMapping[type.toLowerCase()];
     if (mappedType) {
       filters.push(`estateType->name match "${mappedType}"`);
     }
   }
-  if (priceFrom) filters.push(`price >= ${priceFrom}`);
-  if (priceTo) filters.push(`price <= ${priceTo}`);
-  if (roomsFrom) filters.push(`rooms >= ${roomsFrom}`);
-  if (roomsTo) filters.push(`rooms <= ${roomsTo}`);
-  if (areaFrom) filters.push(`area >= ${areaFrom}`);
-  if (areaTo) filters.push(`area <= ${areaTo}`);
+  if (priceFrom) filters.push(`price >= ${Number(priceFrom)}`);
+  if (priceTo && priceTo !== "any") filters.push(`price <= ${Number(priceTo)}`);
+  if (roomsFrom) filters.push(`rooms >= ${Number(roomsFrom)}`);
+  if (roomsTo) filters.push(`rooms <= ${Number(roomsTo)}`);
+  if (areaFrom) filters.push(`area >= ${Number(areaFrom)}`);
+  if (areaTo) filters.push(`area <= ${Number(areaTo)}`);
 
   // Verarbeitung der Features
   let featureList: string[] = [];
@@ -73,7 +76,10 @@ export default async function RealEstateList({
       const featureStrings = featureList.map(
         (feature: string) => `"${feature}"`
       );
-      filters.push(`features[]->name in [${featureStrings.join(",")}]`);
+      // Hier wird geprüft, ob mindestens eines der gewählten Features in den Estate-Features vorhanden ist
+      filters.push(
+        `count((features[]->name)[@ in [${featureStrings.join(",")}]]) > 0`
+      );
     }
   }
 

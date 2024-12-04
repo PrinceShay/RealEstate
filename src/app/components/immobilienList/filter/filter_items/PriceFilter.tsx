@@ -1,4 +1,4 @@
-// components/filters/PriceFilter.tsx
+// components/filter_items/PriceFilter.tsx
 
 "use client";
 
