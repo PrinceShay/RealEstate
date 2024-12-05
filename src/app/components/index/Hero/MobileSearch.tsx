@@ -4,17 +4,12 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ArrowUpRight, MapPin, Home, Euro, Search } from "lucide-react";
+import { ArrowUpRight, MapPin, Euro, Search } from "lucide-react";
 import Select, { StylesConfig } from "react-select";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { client } from "@/app/lib/sanityClient";
@@ -124,7 +119,7 @@ export default function MobileSearch() {
   // States for filters
   const [address, setAddress] = useState<OptionType | null>(null);
   const [range, setRange] = useState<OptionType>(rangeOptions[0]);
-  const [type, setType] = useState<OptionType>(typeOptions[0]);
+  const [type] = useState<OptionType>(typeOptions[0]);
   const [price, setPrice] = useState<OptionType>(priceOptions[0]);
   const [locationOptions, setLocationOptions] = useState<OptionType[]>([]);
 
