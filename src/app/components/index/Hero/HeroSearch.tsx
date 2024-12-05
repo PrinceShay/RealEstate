@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import Select, { StylesConfig } from "react-select";
 import { MapPin, Home, Euro, Search } from "lucide-react";
 import { client } from "@/app/lib/sanityClient";
+import MobileSearch from "./MobileSearch";
 
 type OptionType = { label: string; value: string };
 
-// Shared styles for the Select components
+// Shared styles for Select
 const customStyles: StylesConfig<OptionType, false> = {
   control: (base) => ({
     ...base,
@@ -16,7 +17,6 @@ const customStyles: StylesConfig<OptionType, false> = {
     border: "none",
     boxShadow: "none",
     color: "white",
-
     minWidth: "4em",
     width: "12em",
   }),
@@ -43,7 +43,7 @@ const customStyles: StylesConfig<OptionType, false> = {
   }),
 };
 
-// Custom styles for the range Select to make it less wide
+// Custom styles for the range Select
 const rangeStyles: StylesConfig<OptionType, false> = {
   ...customStyles,
   control: (base, state) => ({
@@ -54,7 +54,7 @@ const rangeStyles: StylesConfig<OptionType, false> = {
   }),
 };
 
-// Options for Select components
+// Options
 const rangeOptions: OptionType[] = [
   { label: "Beliebig", value: "any" },
   { label: "0 km", value: "0" },
@@ -81,15 +81,16 @@ const priceOptions: OptionType[] = [
   { label: "Bis zu 1,000,000€", value: "1000000" },
 ];
 
-// Function to fetch locations from Sanity
+// Fetch locations from Sanity
 async function fetchLocations(): Promise<OptionType[]> {
   const query = `*[_type == "realEstate"]{
     place->{
-      name, 
+      name,
     },
   }`;
   const locations = await client.fetch(query);
-  // Filter to remove duplicate places
+
+  // Filter to remove duplicates
   const uniqueLocations = locations.filter(
     (location: { place: { name: string } }, index: number, self: any[]) =>
       index === self.findIndex((loc) => loc.place.name === location.place.name)
@@ -129,9 +130,9 @@ export default function HeroSearch() {
   };
 
   return (
-    <div className="bg-white bg-opacity-15 max-w-[1600px] p-6 text-white rounded-3xl w-full sm:w-auto flex flex-col sm:flex-row items-center justify-between gap-6 backdrop-blur-md">
+    <div className="bg-white bg-opacity-15 max-w-[1600px] p-3 sm:p-6 text-white rounded-3xl w-full sm:w-auto flex flex-col sm:flex-row items-center justify-between gap-6 backdrop-blur-md">
       {/* Location and Range */}
-      <div className="flex items-center gap-2 rounded-lg px-4 py-2 border border-white border-opacity-65 hover:border-opacity-100 transition-all bg-transparent">
+      <div className="hidden sm:flex items-center gap-2 rounded-lg px-4 py-2 border border-white border-opacity-65 hover:border-opacity-100 transition-all bg-transparent">
         <MapPin className="text-white" />
         <Select
           id="address"
@@ -153,7 +154,7 @@ export default function HeroSearch() {
           isClearable={false}
           isSearchable={false}
           placeholder="Reichweite"
-          styles={rangeStyles} // Apply the custom range styles here
+          styles={rangeStyles}
         />
       </div>
 
@@ -173,7 +174,7 @@ export default function HeroSearch() {
       </div>
 
       {/* Price Filter */}
-      <div className="flex h-full items-center gap-2 px-4 py-2 rounded-lg border border-white border-opacity-65 hover:border-opacity-100 bg-transparent">
+      <div className="hidden sm:flex h-full items-center gap-2 px-4 py-2 rounded-lg border border-white border-opacity-65 hover:border-opacity-100 bg-transparent">
         <Euro className="text-white" />
         <Select
           id="price"
@@ -189,12 +190,15 @@ export default function HeroSearch() {
 
       {/* Search Button */}
       <button
-        className="h-full py-5 sm:py-0 bg-mintGreen-light dark:bg-mintGreen-dark dark:hover:bg-mintGreen-darkHover text-foreground px-7 rounded-lg flex items-center gap-2 hover:bg-mintGreen-dark transition-all ease-out"
+        className="hidden sm:flex h-full py-5 sm:py-0 bg-mintGreen-light dark:bg-mintGreen-dark dark:hover:bg-mintGreen-darkHover text-foreground px-7 rounded-lg items-center gap-2 hover:bg-mintGreen-dark transition-all ease-out"
         onClick={handleSearch}
       >
         <Search />
         Ergebnisse anzeigen
       </button>
+
+      {/* Mobile Search */}
+      <MobileSearch />
     </div>
   );
 }
