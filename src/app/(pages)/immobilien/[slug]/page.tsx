@@ -4,15 +4,10 @@ import { notFound } from "next/navigation";
 import EstateContact from "@/app/components/estate-page/EstateContact";
 import EstateContent from "@/app/components/estate-page/EstateContent";
 import EstateHero from "@/app/components/estate-page/estateHero";
+import EstateHeroLoader from "@/app/components/estate-page/EstateHeroLoader";
+import { Suspense } from "react";
 
-interface EstatePageProps {
-  params: {
-    slug: string;
-  };
-}
-
-// Don't use React.FC here for a Next.js server component.
-const Page = async ({ params }: EstatePageProps) => {
+export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const estate: FullEstate | null = await fetchEstateBySlug(slug);
 
@@ -22,13 +17,13 @@ const Page = async ({ params }: EstatePageProps) => {
 
   return (
     <main className="px-4 sm:px-16 max-w-[1600px] mx-auto py-4 sm:py-48 w-full">
-      <EstateHero estate={estate} />
+      <Suspense fallback={<EstateHeroLoader />}>
+        <EstateHero estate={estate} />
+      </Suspense>
       <div className="mt-24 pb-24 sm:pb-0 flex flex-col sm:grid grid-cols-3 gap-12 sm:gap-24">
         <EstateContent estate={estate} />
         <EstateContact estate={estate} />
       </div>
     </main>
   );
-};
-
-export default Page;
+}
