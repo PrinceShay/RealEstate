@@ -3,8 +3,6 @@ import { FullEstate } from "@/app/lib/interface";
 import { notFound } from "next/navigation";
 import EstateContact from "@/app/components/estate-page/EstateContact";
 import EstateContent from "@/app/components/estate-page/EstateContent";
-import { Suspense } from "react";
-import EstateHeroLoader from "@/app/components/estate-page/EstateHeroLoader";
 import EstateHero from "@/app/components/estate-page/estateHero";
 
 interface EstatePageProps {
@@ -13,8 +11,8 @@ interface EstatePageProps {
   };
 }
 
-export default async function Page({ params }: EstatePageProps) {
-  // No need to await params, just use it directly
+// Don't use React.FC here for a Next.js server component.
+const Page = async ({ params }: EstatePageProps) => {
   const { slug } = params;
   const estate: FullEstate | null = await fetchEstateBySlug(slug);
 
@@ -24,13 +22,13 @@ export default async function Page({ params }: EstatePageProps) {
 
   return (
     <main className="px-4 sm:px-16 max-w-[1600px] mx-auto py-4 sm:py-48 w-full">
-      <Suspense fallback={<EstateHeroLoader />}>
-        <EstateHero estate={estate} />
-      </Suspense>
+      <EstateHero estate={estate} />
       <div className="mt-24 pb-24 sm:pb-0 flex flex-col sm:grid grid-cols-3 gap-12 sm:gap-24">
         <EstateContent estate={estate} />
         <EstateContact estate={estate} />
       </div>
     </main>
   );
-}
+};
+
+export default Page;
