@@ -13,7 +13,8 @@ interface EstatePageProps {
   };
 }
 
-const Page: React.FC<EstatePageProps> = async ({ params }) => {
+const Page: React.FC<EstatePageProps> = async props => {
+  const params = await props.params;
   const estate: FullEstate | null = await fetchEstateBySlug(params.slug);
 
   if (!estate) {

@@ -17,27 +17,27 @@ import FavoriteButton from "./FavoriteButton";
 type Props = {
   title: string;
   link?: string; // Optional gemacht
-  icon: ReactElement;
+  icon: ReactElement<any>;
 };
 
 export default function MobileNavItem({ title, link, icon }: Props) {
   return (
-    <Drawer>
+    (<Drawer>
       {link ? (
         // Wenn ein Link vorhanden ist, als normaler Link rendern
-        <Link
+        (<Link
           href={link}
           className="h-full w-full flex flex-col justify-center gap-[2px] items-center text-xs p-4 active:bg-gradient-to-t from-gray-lightest to-gray-lighter dark:from-gray-dark dark:to-gray-darker"
         >
           {icon}
           {title}
-        </Link>
+        </Link>)
       ) : (
         // Wenn kein Link vorhanden ist, DrawerTrigger verwenden
-        <DrawerTrigger className="h-full w-full flex flex-col justify-center gap-[2px] items-center text-xs p-4 active:bg-gray-lightest dark:active:bg-gray-darker">
+        (<DrawerTrigger className="h-full w-full flex flex-col justify-center gap-[2px] items-center text-xs p-4 active:bg-gray-lightest dark:active:bg-gray-darker">
           {icon}
           {title}
-        </DrawerTrigger>
+        </DrawerTrigger>)
       )}
       <DrawerContent>
         <DrawerHeader>
@@ -63,6 +63,6 @@ export default function MobileNavItem({ title, link, icon }: Props) {
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
-    </Drawer>
+    </Drawer>)
   );
 }
