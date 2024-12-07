@@ -4,9 +4,10 @@
 import RealEstateList from "@/app/components/immobilienList/RealEstateList";
 
 interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default function Page({ searchParams }: PageProps) {
+export default async function Page(props: PageProps) {
+  const searchParams = await props.searchParams;
   return <RealEstateList searchParams={searchParams} />;
 }
