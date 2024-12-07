@@ -29,7 +29,7 @@ export default function NavLink({
       onMouseLeave={handleMouseLeave}
     >
       <Link href={link}>
-        <div className="flex items-center gap-1 hover:bg-gray-lightest dark:hover:bg-gray-darker p-3 rounded-xl ">
+        <div className="flex items-center gap-1 hover:bg-gray-lightest dark:hover:bg-gray-darker p-3 rounded-xl text-nowrap ">
           {title}
           {/* Chevron nur anzeigen, wenn dropdownContent vorhanden ist */}
           {dropdownContent && (

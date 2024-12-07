@@ -50,7 +50,11 @@ export default function FavoriteButton() {
           <div className="w-full px-16 max-w-[1200px] mx-auto overflow-y-auto max-h-[40vh] flex flex-col gap-4">
             {savedEstates.length > 0 ? (
               savedEstates.map((estate, index) => (
-                <EstateItemList key={index} estate={estate} />
+                <EstateItemList
+                  layout="horizontal"
+                  key={index}
+                  estate={estate}
+                />
               ))
             ) : (
               <p className="text-gray-dark dark:text-gray-light">

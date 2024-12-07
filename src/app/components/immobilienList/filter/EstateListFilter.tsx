@@ -262,7 +262,7 @@ const EstateListFilter: React.FC = () => {
   }, [searchParams]);
 
   return (
-    <div className="bg-white border border-gray-light dark:border-gray-dark dark:bg-gray-darker p-6 rounded-md mb-8 sm:sticky sm:top-36 z-20 self-start">
+    <div className="bg-white border border-gray-light dark:border-gray-dark dark:bg-gray-darker p-6 rounded-md mb-8 sm:sticky top-16 2xl:top-36 z-20 self-start overflow-auto">
       <h2 className="text-2xl font-semibold mb-6">Filter</h2>
 
       {/* Standort-Filter */}

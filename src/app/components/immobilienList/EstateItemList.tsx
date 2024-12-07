@@ -13,10 +13,10 @@ type Estate = {
   slug: { current: string };
   _createdAt: string;
   price: number;
-  firstImage?: any; // Replace 'any' with the actual type if available
+  firstImage?: any; // Ersetze 'any' bei Bedarf mit dem korrekten Typ
   title: string;
   place: { name: string };
-  description: any; // Replace 'any' with the actual type if available
+  description: any; // Ersetze 'any' bei Bedarf mit dem korrekten Typ
   features?: Feature[];
   area: number;
   rooms: number;
@@ -24,11 +24,14 @@ type Estate = {
 
 type EstateItemListProps = {
   estate: Estate;
+  layout?: "vertical" | "horizontal";
 };
 
-export default function EstateItemList({ estate }: EstateItemListProps) {
+export default function EstateItemList({
+  estate,
+  layout = "vertical",
+}: EstateItemListProps) {
   const components = {};
-
   const [isSaved, setIsSaved] = React.useState(false);
 
   useEffect(() => {
@@ -69,8 +72,14 @@ export default function EstateItemList({ estate }: EstateItemListProps) {
     }
   };
 
+  // Klassen abhängig vom Layout auswählen:
+  const containerClassNames =
+    layout === "vertical" ? "flex flex-col" : "grid grid-cols-3";
+
   return (
-    <div className="w-full bg-white dark:bg-gray-darker sm:grid flex flex-col grid-cols-1 sm:grid-cols-3 gap-8 p-6 group rounded-2xl ">
+    <div
+      className={`w-full bg-white dark:bg-gray-darker ${containerClassNames} gap-8 p-6 group rounded-2xl`}
+    >
       <div className="flex flex-col h-full gap-3">
         <Link
           href={`/immobilien/${estate.slug.current}`}
@@ -78,7 +87,7 @@ export default function EstateItemList({ estate }: EstateItemListProps) {
         >
           {estate.firstImage && (
             <Image
-              className="group-hover:scale-110 transition-transform duration-700 ease-out object-cover "
+              className="group-hover:scale-110 transition-transform duration-700 ease-out object-cover"
               src={urlFor(estate.firstImage).url()}
               alt={estate.title}
               fill
@@ -100,11 +109,11 @@ export default function EstateItemList({ estate }: EstateItemListProps) {
       </div>
       <Link
         href={`/immobilien/${estate.slug.current}`}
-        className="col-span-2 flex flex-col items-start gap-2"
+        className={`${layout === "vertical" ? "" : "col-span-2"} flex flex-col items-start gap-2`}
       >
         <div className="flex gap-4">
           {isNew && (
-            <div className=" bg-mintGreen-light text-gray-darkest px-3 py-1 rounded-full text-sm">
+            <div className="bg-mintGreen-light text-gray-darkest px-3 py-1 rounded-full text-sm">
               Neu
             </div>
           )}
@@ -136,7 +145,7 @@ export default function EstateItemList({ estate }: EstateItemListProps) {
         <div className="flex gap-2">
           <div>{estate.area}m²</div> | <div>{estate.rooms} Zimmer</div>
         </div>
-        <p className=" text-mintGreen-light dark:text-mintGreen-dark font-semibold text-2xl mt-4">
+        <p className="text-mintGreen-light dark:text-mintGreen-dark font-semibold text-2xl mt-4">
           {formattedNumber}€
         </p>
       </Link>

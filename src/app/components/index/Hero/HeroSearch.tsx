@@ -194,7 +194,7 @@ export default function HeroSearch() {
         onClick={handleSearch}
       >
         <Search />
-        Ergebnisse anzeigen
+        Suchen
       </button>
 
       {/* Mobile Search */}

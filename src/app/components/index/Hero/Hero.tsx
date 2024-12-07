@@ -63,17 +63,17 @@ function Hero() {
   return (
     <section className="h-[100dvh] w-full px-4 pt-4 pb-24 sm:p-16 sm:pt-24">
       <div className="relative w-full h-full  rounded-2xl flex items-end justify-center">
-        <div className="p-8 sm:p-36 relative w-full h-full flex flex-col items-center justify-end z-20">
-          <div className=" flex flex-col text-center text-white mb-16">
+        <div className="p-8 lg:p-16 2xl:p-36 relative w-full h-full flex flex-col items-center justify-end z-20">
+          <div className=" flex flex-col text-center text-white mb-8">
             <div className="overflow-hidden">
               <h1
                 ref={heroHeadline}
-                className="split text-4xl sm:text-7xl font-medium mb-4 hyphens-auto"
+                className="split text-4xl md:text-5xl 2xl:text-7xl font-medium mb-4 hyphens-auto"
               >
                 Finde dein Traum&shy;zuhause
               </h1>
             </div>
-            <p ref={heroParagraph} className="split text-lg sm:text-2xl ">
+            <p ref={heroParagraph} className="split text-lg 2xl:text-2xl ">
               Entdecken Sie unsere exklusiven Immobilienangebote und finden Sie
               das perfekte Heim für Sie und Ihre Familie.
             </p>
