@@ -13,9 +13,10 @@ interface EstatePageProps {
   };
 }
 
-const Page: React.FC<EstatePageProps> = async props => {
-  const params = await props.params;
-  const estate: FullEstate | null = await fetchEstateBySlug(params.slug);
+export default async function Page({ params }: EstatePageProps) {
+  // No need to await params, just use it directly
+  const { slug } = params;
+  const estate: FullEstate | null = await fetchEstateBySlug(slug);
 
   if (!estate) {
     notFound();
@@ -32,6 +33,4 @@ const Page: React.FC<EstatePageProps> = async props => {
       </div>
     </main>
   );
-};
-
-export default Page;
+}
