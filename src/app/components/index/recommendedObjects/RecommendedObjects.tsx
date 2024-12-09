@@ -1,4 +1,3 @@
-// RecommendedObjects.tsx
 import React, { Suspense } from "react";
 import EstateItem from "./EstateItem";
 import { EstateCard } from "@/app/lib/interface";
@@ -18,9 +17,9 @@ const RecommendedObjects = async () => {
           Vorgestellte Immobilien
         </h1>
         <p className="text-lg max-w-4xl mx-auto">
-          UBBS ist äußerst erfahren in der Arbeit über verschiedene Sektoren
-          hinweg – Wohn-, Gastgewerbe- und Gewerbeimmobilien – und in
-          verschiedenen Disziplinen – Architektur und Innenarchitektur.
+          Schau dir unsere aktuellen Immobilien an und finde dein neues Zuhause!
+          Egal ob stylishe Wohnung in der City oder gemütliches Haus im Grünen –
+          bei uns wirst du fündig.
         </p>
       </div>
 

@@ -55,7 +55,7 @@ export default function NavbarAlt() {
         <nav className="place-self-center">
           <ul className="flex gap-1 items-center">
             <li>
-              <NavLink title={"Immobilien kaufen"} link={"/immobilien"} />
+              <NavLink title={"Immobilien"} link={"/immobilien"} />
             </li>
             <li>
               <NavLink

@@ -11,18 +11,23 @@ export default function AboutUsIndex() {
         <h1 className="text-4xl sm:text-5xl leading-tight">Was uns ausmacht</h1>
       </div>
       <div className="col-span-6 text-lg">
-        <p className="mb-4">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
-          maiores officia cum sunt amet aliquid necessitatibus sequi aspernatur
-          est commodi iste cumque quos voluptatem labore id quidem tempore,
-          molestiae harum.Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Libero maiores officia cum sunt amet aliquid necessitatibus
-          sequi aspernatur est commodi iste cumque quos voluptatem labore id
-          quidem tempore, molestiae harum. Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Libero maiores officia cum sunt amet
-          aliquid necessitatibus sequi aspernatur est commodi iste cumque quos
-          voluptatem labore id quidem tempore, molestiae harum.
-        </p>
+        <div className="mb-4">
+          <p className="">
+            Hey! Wir sind das Team von HomeFinder – junge, motivierte
+            Immobilienexperten, die wissen, was du brauchst. Mit frischem Blick
+            und viel Leidenschaft begleiten wir dich vom ersten Klick bis zum
+            Einzug.
+            <p className="mt-6">
+              Deine Zufriedenheit ist unser Antrieb! Wir setzen auf persönliche
+              Betreuung und nutzen moderne Technologien, um deine
+              Immobiliensuche easy zu gestalten. Dank unserer lokalen Expertise
+              und einem starken Netzwerk finden wir immer die besten Angebote
+              für dich. Transparenz und Nachhaltigkeit stehen bei uns an erster
+              Stelle – so findest du nicht nur ein Zuhause, sondern das richtige
+              Zuhause.
+            </p>
+          </p>
+        </div>
         <SecondaryButton title="Mehr erfahren" link="/" />
       </div>
     </section>

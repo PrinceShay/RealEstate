@@ -1,30 +1,30 @@
 import { client } from "@/app/lib/sanityClient";
 import React from "react";
-import BlogItem from "../../index/Blog/BlogItem";
 import { Blog } from "@/app/types";
+import Link from "next/link";
 
 const blogs = await client.fetch(`*[_type == "blog"][0...3]{
   _id,
   title,
   slug,
-  titleImage,
-  tags[]->{
-    _id,
-    title
-  },
   publishedAt,
-  author->{
-    name
-  },
-  content
 }`);
 
 export default function NavBlogContent() {
   return (
-    <div className="flex gap-2">
-      {blogs.map((blog: Blog) => (
-        <BlogItem blog={blog} />
-      ))}
+    <div className=" min-w-72 text-gray-darkest dark:text-gray-lightest">
+      <div className="flex flex-col gap-4">
+        <h1 className="text-lg mb-6">Blogbeiträge</h1>
+        {blogs.map((blog: Blog, _id: string) => (
+          // <BlogItem key={_id} blog={blog} />
+          <Link
+            className="p-2 hover:bg-gray-lightest dark:hover:bg-gray-darker rounded-lg"
+            href={`/${blog.slug.current}`}
+          >
+            {blog.title}
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

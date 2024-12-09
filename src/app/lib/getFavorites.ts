@@ -2,7 +2,7 @@
 import { client } from "./sanityClient";
 
 export async function getData() {
-  const query = `*[_type == "realEstate"]{
+  const query = `*[_type == "realEstate"][0...6]{
     title,
     slug,
     "firstImage": gallery[0].asset->url,

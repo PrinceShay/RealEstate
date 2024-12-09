@@ -43,7 +43,7 @@ export default function NavLink({
 
       {dropdownContent && (
         <div
-          className={`shadow-2xl origin-top absolute p-6 opacity-0 rounded-xl min-w-64 bg-background text-foreground transition-[opacity] border scale-100 ${isDropdownOpen ? "opacity-100" : ""}  block`}
+          className={`shadow-2xl origin-top absolute p-6 opacity-0 rounded-xl min-w-64 bg-white dark:bg-gray-darkest transition-[opacity] border scale-100 ${isDropdownOpen ? "opacity-100" : ""}  block`}
         >
           {dropdownContent}
         </div>
