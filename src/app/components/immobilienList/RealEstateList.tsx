@@ -92,6 +92,15 @@ export default async function RealEstateList({
     "firstImage": gallery[0].asset->url,
     price,
     rooms,
+    gallery[]{
+      _key,
+      asset->{
+        _id,
+        url
+      },
+      caption,
+      hotspot
+    },
     description,
     _createdAt,
     estateType->{
@@ -103,6 +112,7 @@ export default async function RealEstateList({
     place->{
       name, 
     },
+    
     area
   }`;
 

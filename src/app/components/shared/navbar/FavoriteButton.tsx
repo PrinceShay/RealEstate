@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/drawer";
 
 import React, { useEffect, useState } from "react";
-import EstateItemList from "../../immobilienList/EstateItemList";
+import EstateItemList from "../../immobilienList/Item/EstateItemList";
 
 export default function FavoriteButton() {
   const [savedEstates, setSavedEstates] = useState([]);

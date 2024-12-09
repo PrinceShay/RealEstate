@@ -2,8 +2,10 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { Heart, MapPin, Share } from "lucide-react";
+import { GalleryImage } from "@/app/lib/interface";
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
+import ImagePreviewSlider from "./ImagePreviewSlider";
 
 type Feature = {
   name: string;
@@ -13,10 +15,11 @@ type Estate = {
   slug: { current: string };
   _createdAt: string;
   price: number;
-  firstImage?: any; // Ersetze 'any' bei Bedarf mit dem korrekten Typ
+  gallery: GalleryImage[];
+  firstImage?: GalleryImage; // Ensure firstImage is included if it's separate
   title: string;
   place: { name: string };
-  description: any; // Ersetze 'any' bei Bedarf mit dem korrekten Typ
+  description: any; // Replace 'any' with the correct type if needed
   features?: Feature[];
   area: number;
   rooms: number;
@@ -72,7 +75,7 @@ export default function EstateItemList({
     }
   };
 
-  // Klassen abhängig vom Layout auswählen:
+  // Adjust container classes based on layout
   const containerClassNames =
     layout === "vertical" ? "flex flex-col" : "grid grid-cols-3";
 
@@ -83,15 +86,38 @@ export default function EstateItemList({
       <div className="flex flex-col h-full gap-3">
         <Link
           href={`/immobilien/${estate.slug.current}`}
-          className="aspect-square object-cover sm:object-contain sm:aspect-video bg-gray-100 rounded-xl overflow-hidden relative w-full"
+          className={`aspect-square object-cover sm:object-contain sm:aspect-video bg-gray-100 rounded-xl overflow-hidden relative w-full ${
+            layout === "horizontal" ? "h-full" : "h-auto"
+          }`}
         >
-          {estate.firstImage && (
+          {layout === "horizontal" ? (
+            estate.firstImage ? (
+              <Image
+                className="group-hover:scale-110 transition-transform duration-700 ease-out object-cover"
+                src={urlFor(estate.firstImage).url()}
+                alt={estate.title}
+                layout="fill" // Adjust if using Next.js 13 or later
+                objectFit="cover"
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full text-gray-500">
+                No Image Available
+              </div>
+            )
+          ) : estate.gallery && estate.gallery.length > 0 ? (
+            <ImagePreviewSlider estate={estate} />
+          ) : estate.firstImage ? (
             <Image
               className="group-hover:scale-110 transition-transform duration-700 ease-out object-cover"
               src={urlFor(estate.firstImage).url()}
               alt={estate.title}
-              fill
+              layout="fill" // Adjust if using Next.js 13 or later
+              objectFit="cover"
             />
+          ) : (
+            <div className="flex items-center justify-center h-full text-gray-500">
+              No Images Available
+            </div>
           )}
         </Link>
         <div className="flex gap-2 text-gray-dark dark:text-gray-light">
@@ -109,7 +135,9 @@ export default function EstateItemList({
       </div>
       <Link
         href={`/immobilien/${estate.slug.current}`}
-        className={`${layout === "vertical" ? "" : "col-span-2"} flex flex-col items-start gap-2`}
+        className={`${
+          layout === "vertical" ? "" : "col-span-2"
+        } flex flex-col items-start gap-2`}
       >
         <div className="flex gap-4">
           {isNew && (

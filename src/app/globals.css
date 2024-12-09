@@ -102,3 +102,8 @@ we still enforce color-scheme: dark, despite the user preference */
 small {
   font-size: 0.75rem;
 }
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #85c7ae !important;
+}
