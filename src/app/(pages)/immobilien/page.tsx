@@ -3,11 +3,6 @@
 import RealEstateList from "@/app/components/immobilienList/RealEstateList";
 import { Metadata } from "next";
 
-// Define the structure of route parameters
-interface Params {
-  slug: string;
-}
-
 // Define the structure of search parameters
 interface SearchParams {
   [key: string]: string | string[] | undefined;
@@ -32,9 +27,11 @@ export async function generateMetadata({
   params,
   searchParams,
 }: {
-  params: Params;
+  params: Promise<{ slug: string }>;
   searchParams: SearchParams;
 }): Promise<Metadata> {
+  const { slug } = await params; // Await the params here if needed
+
   const hasFilters = Object.keys(searchParams).length > 0;
 
   if (!hasFilters) {
@@ -136,10 +133,10 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: Params;
+  params: Promise<{ slug: string }>;
   searchParams: SearchParams;
 }) {
-  const { slug } = params;
+  const { slug } = await params; // Await the params here
 
   return <RealEstateList slug={slug} searchParams={searchParams} />;
 }
