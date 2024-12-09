@@ -7,6 +7,7 @@ import EstateListFilter from "./filter/EstateListFilter";
 import { Suspense } from "react";
 
 interface RealEstateListProps {
+  slug: string; // Added slug prop
   searchParams: {
     [key: string]: string | string[] | undefined;
   };
@@ -30,8 +31,13 @@ function getFirstParam(
 export const dynamic = "force-dynamic";
 
 export default async function RealEstateList({
+  slug, // Destructure slug
   searchParams,
 }: RealEstateListProps) {
+  // Utilize 'slug' as needed
+  // For example, you might want to fetch specific data based on the slug
+  // This depends on your application's requirements
+
   const location = getFirstParam(searchParams.location);
   const type = getFirstParam(searchParams.type);
   const priceFrom = getFirstParam(searchParams.priceFrom);

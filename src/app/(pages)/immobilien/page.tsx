@@ -1,11 +1,16 @@
-// app/components/immobilienList/page.tsx
+// app/immobilienList/[slug]/page.tsx
 
 import RealEstateList from "@/app/components/immobilienList/RealEstateList";
 import { Metadata } from "next";
 
-interface PageProps {
-  params: { [key: string]: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+// Define the structure of route parameters
+interface Params {
+  slug: string;
+}
+
+// Define the structure of search parameters
+interface SearchParams {
+  [key: string]: string | string[] | undefined;
 }
 
 // Helper function to get the first parameter as a string
@@ -22,16 +27,17 @@ function getFirstParam(
   }
 }
 
-// Export the generateMetadata function from the Page component
+// Generate Metadata based on params and searchParams
 export async function generateMetadata({
   params,
   searchParams,
-}: PageProps): Promise<Metadata> {
-  // Determine if any search parameters are present
+}: {
+  params: Params;
+  searchParams: SearchParams;
+}): Promise<Metadata> {
   const hasFilters = Object.keys(searchParams).length > 0;
 
   if (!hasFilters) {
-    // Fallback metadata when no filters are applied
     return {
       title: "Immobilien Angebote",
       description: "Finden Sie die besten Immobilienangebote in Deutschland.",
@@ -86,33 +92,54 @@ export async function generateMetadata({
     description += `Ausstattung: ${features}.`;
   }
 
-  // Fallback description
   description =
     description.trim() ||
     "Finden Sie die besten Immobilienangebote in Deutschland.";
 
   return {
     title: title || "Immobilien Angebote",
-    description: description,
+    description,
     openGraph: {
       title: title || "Immobilien Angebote",
-      description: description,
+      description,
       // Optionally, add a default image or other Open Graph properties
       // images: [{ url: "/default-og-image.jpg", alt: "Immobilienangebote" }],
     },
     twitter: {
       card: "summary_large_image",
       title: title || "Immobilien Angebote",
-      description: description,
+      description,
       // Optionally, add a default image for Twitter cards
       // images: ["/default-twitter-image.jpg"],
     },
   };
 }
 
-// Page Component
-export default async function Page(props: PageProps) {
-  const { searchParams } = props;
+// Generate Static Params (Optional)
+export async function generateStaticParams() {
+  // Fetch available slugs from your data source
+  const response = await fetch("https://your-api.com/real-estate-slugs");
 
-  return <RealEstateList searchParams={searchParams} />;
+  if (!response.ok) {
+    throw new Error("Failed to fetch slugs");
+  }
+
+  const posts: { slug: string }[] = await response.json();
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+// Page Component
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: Params;
+  searchParams: SearchParams;
+}) {
+  const { slug } = params;
+
+  return <RealEstateList slug={slug} searchParams={searchParams} />;
 }
