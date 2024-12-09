@@ -16,9 +16,9 @@ export default function NavBlogContent() {
       <div className="flex flex-col gap-4">
         <h1 className="text-lg mb-6">Blogbeiträge</h1>
         {blogs.map((blog: Blog, _id: string) => (
-          // <BlogItem key={_id} blog={blog} />
           <Link
             className="p-2 hover:bg-gray-lightest dark:hover:bg-gray-darker rounded-lg"
+            key={_id}
             href={`/${blog.slug.current}`}
           >
             {blog.title}
