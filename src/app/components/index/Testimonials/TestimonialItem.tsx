@@ -38,7 +38,7 @@ export default function TestimonialItem({
           <Star stroke="none" className="fill-yellow-500" />
           <StarHalf stroke="none" className="fill-yellow-500" />
         </div>
-        <p className="text-xl mt-4 mb-4">{text}</p>
+        <p className="text-md sm:text-xl mt-4 mb-4">{text}</p>
         <Link className="text-lg text-mintGreen-light" href={"/"}>
           Erfolgsstory ansehen
         </Link>
