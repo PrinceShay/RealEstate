@@ -24,7 +24,7 @@ export default function Features() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: FeatureContainer.current,
-          start: "top bottom",
+          start: "20% bottom",
         },
       });
 
