@@ -78,7 +78,7 @@ export default function AboutUsIndex() {
     { dependencies: [isSplit] }
   );
   return (
-    <section className="px-4 sm:px-16 max-w-[1600px] mx-auto py-24 grid grid-cols-1 gap-12 sm:grid-cols-12  border-t border-gray-dark dark:border-gray-light">
+    <section className="px-4 sm:px-16 overflow-x-hidden max-w-[1600px] mx-auto py-24 grid grid-cols-1 gap-12 sm:grid-cols-12  border-t border-gray-dark dark:border-gray-light">
       <div className="col-span-6">
         <p
           ref={aboutTagline}
