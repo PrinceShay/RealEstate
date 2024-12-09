@@ -34,7 +34,7 @@ export default function AboutUsIndex() {
         });
 
         aboutTL.from(aboutHeadline.current!.querySelectorAll(".word"), {
-          YPercent: 100,
+          yPercent: 100,
           opacity: 0,
           stagger: 0.03,
           duration: 1.5,

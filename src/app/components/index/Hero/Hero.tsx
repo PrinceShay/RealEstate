@@ -22,7 +22,7 @@ function Hero() {
       });
 
       setSplit(true);
-      if (heroHeadline && isSplit) {
+      if (heroHeadline.current && isSplit) {
         gsap.set("#heroTextContainer", { opacity: 1 });
         const heroIn = gsap.timeline({ delay: 0.9 });
 
@@ -64,7 +64,10 @@ function Hero() {
     <section className="h-[100dvh] w-full px-4 pt-4 pb-24 sm:p-16 sm:pt-24">
       <div className="relative w-full h-full  rounded-2xl flex items-end justify-center">
         <div className="p-8 lg:p-16 2xl:p-36 relative w-full h-full flex flex-col items-center justify-end z-20">
-          <div className=" flex flex-col text-center text-white mb-8">
+          <div
+            id="heroTextContainer"
+            className="opacity-0 flex flex-col text-center text-white mb-8"
+          >
             <div className="overflow-hidden">
               <h1
                 ref={heroHeadline}
