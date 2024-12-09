@@ -24,6 +24,7 @@ function getFirstParam(
 
 // Export the generateMetadata function from the Page component
 export async function generateMetadata({
+  params,
   searchParams,
 }: PageProps): Promise<Metadata> {
   // Determine if any search parameters are present
@@ -51,7 +52,7 @@ export async function generateMetadata({
   }
 
   // Extract parameters with defaults
-  const location = getFirstParam(searchParams.location, "Deutschland"); // Default to "Deutschland" instead of "Immobilien"
+  const location = getFirstParam(searchParams.location, "Deutschland");
   const type = getFirstParam(searchParams.type, "Angebote");
   const priceFrom = getFirstParam(searchParams.priceFrom);
   const priceTo = getFirstParam(searchParams.priceTo);
@@ -111,7 +112,7 @@ export async function generateMetadata({
 
 // Page Component
 export default async function Page(props: PageProps) {
-  const searchParams = props.searchParams;
+  const { searchParams } = props;
 
   return <RealEstateList searchParams={searchParams} />;
 }
