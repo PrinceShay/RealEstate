@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import EstateItem from "@/app/components/index/recommendedObjects/EstateItem";
 import EstateItemList from "@/app/components/immobilienList/Item/EstateItemList";
 import { Switch } from "@/components/ui/switch";
+import ItemSkeleton from "./skeleton/ItemSkeleton";
 
 interface EstateDisplayProps {
   estates: any[];

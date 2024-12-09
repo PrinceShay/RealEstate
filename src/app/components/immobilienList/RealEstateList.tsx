@@ -1,7 +1,10 @@
+// app/components/immobilienList/RealEstateList.tsx
+
 import { EstateCard } from "@/app/lib/interface";
 import { client } from "@/app/lib/sanityClient";
 import EstateDisplay from "./EstateDisplay";
 import EstateListFilter from "./filter/EstateListFilter";
+import { Suspense } from "react";
 
 interface RealEstateListProps {
   searchParams: {
@@ -9,7 +12,7 @@ interface RealEstateListProps {
   };
 }
 
-// Hilfsfunktion, um den ersten Parameter als String zu erhalten
+// Helper function to get the first parameter as a string
 function getFirstParam(
   param: string | string[] | undefined,
   defaultValue: string = ""
@@ -23,7 +26,7 @@ function getFirstParam(
   }
 }
 
-// Damit die Komponente bei Änderungen der searchParams neu rendert
+// Ensure the component re-renders on searchParams change
 export const dynamic = "force-dynamic";
 
 export default async function RealEstateList({
@@ -39,7 +42,7 @@ export default async function RealEstateList({
   const areaTo = getFirstParam(searchParams.areaTo);
   const featuresParam = searchParams.features;
 
-  // Filter erstellen basierend auf den Parametern
+  // Create filters based on the parameters
   const filters: string[] = [];
 
   const typeMapping: Record<string, string> = {
@@ -63,7 +66,7 @@ export default async function RealEstateList({
   if (areaFrom) filters.push(`area >= ${Number(areaFrom)}`);
   if (areaTo) filters.push(`area <= ${Number(areaTo)}`);
 
-  // Verarbeitung der Features
+  // Process Features
   let featureList: string[] = [];
 
   if (featuresParam) {
@@ -76,14 +79,14 @@ export default async function RealEstateList({
       const featureStrings = featureList.map(
         (feature: string) => `"${feature}"`
       );
-      // Hier wird geprüft, ob mindestens eines der gewählten Features in den Estate-Features vorhanden ist
+      // Ensure at least one of the selected features is present
       filters.push(
         `count((features[]->name)[@ in [${featureStrings.join(",")}]]) > 0`
       );
     }
   }
 
-  // Konstruktion der Abfrage
+  // Construct the query
   const query = `*[_type == "realEstate" ${
     filters.length ? `&& ${filters.join(" && ")}` : ""
   }]{
@@ -122,6 +125,7 @@ export default async function RealEstateList({
     return (
       <section className="px-4 max-w-[1600px] sm:grid grid-cols-3 gap-12 mx-auto pb-24 pt-12 md:pt-24 2xl:pt-48">
         <EstateListFilter />
+
         {estates.length > 0 ? (
           <EstateDisplay estates={estates} />
         ) : (

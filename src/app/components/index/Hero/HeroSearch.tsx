@@ -9,7 +9,7 @@ import MobileSearch from "./MobileSearch";
 
 type OptionType = { label: string; value: string };
 
-// Shared styles for Select
+// Gemeinsame Styles für Select
 const customStyles: StylesConfig<OptionType, false> = {
   control: (base) => ({
     ...base,
@@ -43,7 +43,7 @@ const customStyles: StylesConfig<OptionType, false> = {
   }),
 };
 
-// Custom styles for the range Select
+// Custom Styles für den Range-Select
 const rangeStyles: StylesConfig<OptionType, false> = {
   ...customStyles,
   control: (base, state) => ({
@@ -54,7 +54,7 @@ const rangeStyles: StylesConfig<OptionType, false> = {
   }),
 };
 
-// Options
+// Optionen
 const rangeOptions: OptionType[] = [
   { label: "Beliebig", value: "any" },
   { label: "0 km", value: "0" },
@@ -81,7 +81,7 @@ const priceOptions: OptionType[] = [
   { label: "Bis zu 1,000,000€", value: "1000000" },
 ];
 
-// Fetch locations from Sanity
+// Locations von Sanity abrufen
 async function fetchLocations(): Promise<OptionType[]> {
   const query = `*[_type == "realEstate"]{
     place->{
@@ -90,7 +90,7 @@ async function fetchLocations(): Promise<OptionType[]> {
   }`;
   const locations = await client.fetch(query);
 
-  // Filter to remove duplicates
+  // Doppelte Einträge entfernen
   const uniqueLocations = locations.filter(
     (location: { place: { name: string } }, index: number, self: any[]) =>
       index === self.findIndex((loc) => loc.place.name === location.place.name)
@@ -120,18 +120,36 @@ export default function HeroSearch() {
   }, []);
 
   const handleSearch = () => {
-    const query = new URLSearchParams({
-      location: address?.value || "",
-      range: range?.value || "any",
-      type: type?.value || "any",
-      price: price?.value || "any",
-    });
-    router.push(`/immobilien?${query.toString()}`);
+    const params: Record<string, string> = {};
+
+    if (address?.value && address.value !== "any") {
+      params.location = address.value;
+    }
+
+    if (range.value && range.value !== "any") {
+      params.range = range.value;
+    }
+
+    if (type.value && type.value !== "any") {
+      params.type = type.value;
+    }
+
+    if (price.value && price.value !== "any") {
+      params.price = price.value;
+    }
+
+    const queryString = new URLSearchParams(params).toString();
+
+    if (queryString) {
+      router.push(`/immobilien?${queryString}`);
+    } else {
+      router.push(`/immobilien`);
+    }
   };
 
   return (
     <div className="bg-white bg-opacity-15 max-w-[1600px] p-3 sm:p-6 text-white rounded-3xl w-full sm:w-auto flex flex-col sm:flex-row items-center justify-between gap-6 backdrop-blur-md">
-      {/* Location and Range */}
+      {/* Ort und Reichweite */}
       <div className="hidden sm:flex items-center gap-2 rounded-lg px-4 py-2 border border-white border-opacity-65 hover:border-opacity-100 transition-all bg-transparent">
         <MapPin className="text-white" />
         <Select
@@ -158,7 +176,7 @@ export default function HeroSearch() {
         />
       </div>
 
-      {/* Property Type */}
+      {/* Immobilientyp */}
       <div className="sm:flex h-full items-center gap-2 rounded-lg px-4 py-2 border border-white border-opacity-65 hover:border-opacity-100 transition-all bg-transparent hidden">
         <Home className="text-white" />
         <Select
@@ -173,7 +191,7 @@ export default function HeroSearch() {
         />
       </div>
 
-      {/* Price Filter */}
+      {/* Preisfilter */}
       <div className="hidden sm:flex h-full items-center gap-2 px-4 py-2 rounded-lg border border-white border-opacity-65 hover:border-opacity-100 bg-transparent">
         <Euro className="text-white" />
         <Select
@@ -188,7 +206,7 @@ export default function HeroSearch() {
         />
       </div>
 
-      {/* Search Button */}
+      {/* Suchbutton */}
       <button
         className="hidden sm:flex h-full py-5 sm:py-0 bg-mintGreen-light dark:bg-mintGreen-dark dark:hover:bg-mintGreen-darkHover text-foreground px-7 rounded-lg items-center gap-2 hover:bg-mintGreen-dark transition-all ease-out"
         onClick={handleSearch}
@@ -197,7 +215,7 @@ export default function HeroSearch() {
         Suchen
       </button>
 
-      {/* Mobile Search */}
+      {/* Mobile Suche */}
       <MobileSearch />
     </div>
   );

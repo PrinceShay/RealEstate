@@ -12,7 +12,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { GalleryImage } from "@/app/lib/interface"; // Importiere den Typ
-import { ArrowLeft, ArrowRight } from "lucide-react"; // Import Lucide icons
 
 type Estate = {
   gallery: GalleryImage[];
