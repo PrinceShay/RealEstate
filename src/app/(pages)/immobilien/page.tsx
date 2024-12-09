@@ -1,5 +1,6 @@
 // app/immobilienList/[slug]/page.tsx
 
+import React from "react";
 import RealEstateList from "@/app/components/immobilienList/RealEstateList";
 import { Metadata } from "next";
 
@@ -28,11 +29,14 @@ export async function generateMetadata({
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 }): Promise<Metadata> {
-  const { slug } = await params; // Await the params here if needed
+  // Await both params and searchParams
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
 
-  const hasFilters = Object.keys(searchParams).length > 0;
+  const { slug } = resolvedParams;
+  const hasFilters = Object.keys(resolvedSearchParams).length > 0;
 
   if (!hasFilters) {
     return {
@@ -55,15 +59,15 @@ export async function generateMetadata({
   }
 
   // Extract parameters with defaults
-  const location = getFirstParam(searchParams.location, "Deutschland");
-  const type = getFirstParam(searchParams.type, "Angebote");
-  const priceFrom = getFirstParam(searchParams.priceFrom);
-  const priceTo = getFirstParam(searchParams.priceTo);
-  const roomsFrom = getFirstParam(searchParams.roomsFrom);
-  const roomsTo = getFirstParam(searchParams.roomsTo);
-  const areaFrom = getFirstParam(searchParams.areaFrom);
-  const areaTo = getFirstParam(searchParams.areaTo);
-  const featuresParam = searchParams.features;
+  const location = getFirstParam(resolvedSearchParams.location, "Deutschland");
+  const type = getFirstParam(resolvedSearchParams.type, "Angebote");
+  const priceFrom = getFirstParam(resolvedSearchParams.priceFrom);
+  const priceTo = getFirstParam(resolvedSearchParams.priceTo);
+  const roomsFrom = getFirstParam(resolvedSearchParams.roomsFrom);
+  const roomsTo = getFirstParam(resolvedSearchParams.roomsTo);
+  const areaFrom = getFirstParam(resolvedSearchParams.areaFrom);
+  const areaTo = getFirstParam(resolvedSearchParams.areaTo);
+  const featuresParam = resolvedSearchParams.features;
 
   // Construct the title
   let title = `Immobilien ${type}`;
@@ -74,13 +78,19 @@ export async function generateMetadata({
   // Construct the description
   let description = `Entdecken Sie eine Vielzahl von Immobilien zum ${type.toLowerCase()} in ${location}. `;
   if (priceFrom || priceTo) {
-    description += `Preise von ${priceFrom || "Beliebig"} bis ${priceTo || "unbegrenzt"}. `;
+    description += `Preise von ${priceFrom || "Beliebig"} bis ${
+      priceTo || "unbegrenzt"
+    }. `;
   }
   if (roomsFrom || roomsTo) {
-    description += `Anzahl der Zimmer: ${roomsFrom || "Beliebig"} bis ${roomsTo || "unbegrenzt"}. `;
+    description += `Anzahl der Zimmer: ${roomsFrom || "Beliebig"} bis ${
+      roomsTo || "unbegrenzt"
+    }. `;
   }
   if (areaFrom || areaTo) {
-    description += `Wohnfläche von ${areaFrom || "Beliebig"} bis ${areaTo || "unbegrenzt"} Quadratmetern. `;
+    description += `Wohnfläche von ${areaFrom || "Beliebig"} bis ${
+      areaTo || "unbegrenzt"
+    } Quadratmetern. `;
   }
   if (featuresParam) {
     const features = Array.isArray(featuresParam)
@@ -114,18 +124,23 @@ export async function generateMetadata({
 
 // Generate Static Params (Optional)
 export async function generateStaticParams() {
-  // Fetch available slugs from your data source
-  const response = await fetch("https://your-api.com/real-estate-slugs");
+  try {
+    // Fetch available slugs from your data source
+    const response = await fetch("https://your-api.com/real-estate-slugs");
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch slugs");
+    if (!response.ok) {
+      throw new Error("Failed to fetch slugs");
+    }
+
+    const posts: { slug: string }[] = await response.json();
+
+    return posts.map((post) => ({
+      slug: post.slug,
+    }));
+  } catch (error) {
+    console.error("Error generating static params:", error);
+    return [];
   }
-
-  const posts: { slug: string }[] = await response.json();
-
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
 }
 
 // Page Component
@@ -134,9 +149,18 @@ export default async function Page({
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 }) {
-  const { slug } = await params; // Await the params here
+  try {
+    // Await both params and searchParams
+    const resolvedParams = await params;
+    const resolvedSearchParams = await searchParams;
 
-  return <RealEstateList slug={slug} searchParams={searchParams} />;
+    const { slug } = resolvedParams;
+
+    return <RealEstateList slug={slug} searchParams={resolvedSearchParams} />;
+  } catch (error) {
+    console.error("Error rendering Page component:", error);
+    return <div>Etwas ist schief gelaufen.</div>;
+  }
 }
