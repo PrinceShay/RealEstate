@@ -122,27 +122,6 @@ export async function generateMetadata({
   };
 }
 
-// Generate Static Params (Optional)
-export async function generateStaticParams() {
-  try {
-    // Fetch available slugs from your data source
-    const response = await fetch("https://your-api.com/real-estate-slugs");
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch slugs");
-    }
-
-    const posts: { slug: string }[] = await response.json();
-
-    return posts.map((post) => ({
-      slug: post.slug,
-    }));
-  } catch (error) {
-    console.error("Error generating static params:", error);
-    return [];
-  }
-}
-
 // Page Component
 export default async function Page({
   params,
