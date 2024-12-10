@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
-import "../globals.css";
-import MobileNav from "../components/shared/navbar/MobileNav";
-import Footer from "../components/shared/footer/Footer";
-import { Toaster } from "@/components/ui/toaster";
-import NavbarAlt from "../components/shared/navbar/NavbarAlt";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "HomeFinder – Ihr Immobilienmakler in Deutschland",
@@ -17,12 +13,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <NavbarAlt />
-      <MobileNav />
-      <main>{children}</main>
-      <Toaster />
-      <Footer />
-    </>
+    <html lang="de">
+      <body
+        className={`antialiased  dark:bg-gray-darkest dark:text-gray-lightest transition-colors`}
+      >
+        {children}
+      </body>
+    </html>
   );
 }

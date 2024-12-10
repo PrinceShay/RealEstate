@@ -2,9 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { urlFor } from "@/app/lib/sanityClient";
 import { Blog, Tag } from "@/app/types";
+import { toast } from "@/hooks/use-toast";
 
 type Props = {
   blog: Blog;
@@ -12,7 +12,17 @@ type Props = {
 
 export default function BlogItem({ blog }: Props) {
   return (
-    <Link className="group" href={`/${blog.slug.current}`}>
+    <div
+      onClick={() => {
+        toast({
+          title: "Ich bin nur eine Preview :(",
+          description:
+            "Kontaktier mich noch heute um deine Webseite zu realisieren",
+        });
+      }}
+      className="group cursor-pointer"
+      // href={`/${blog.slug.current}`}
+    >
       <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden group-hover:scale-95 transition-transform ease-inOut duration-500">
         <div className="w-full h-full relative z-20 flex flex-col justify-end p-6 bg-gradient-to-b from-transparent to-gray-darkest dark:to-gray-darker text-gray-lightest">
           <div className="flex gap-2 mb-2 flex-nowrap overflow-auto">
@@ -43,6 +53,6 @@ export default function BlogItem({ blog }: Props) {
           />
         )}
       </div>
-    </Link>
+    </div>
   );
 }

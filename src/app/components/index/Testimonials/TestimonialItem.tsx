@@ -19,7 +19,7 @@ export default function TestimonialItem({
   return (
     <div className="w-full h-full max-h-[60vh] bg-gray-dark dark:bg-gray-dark rounded-2xl aspect-[9/16] flex flex-col gap-8 p-8 overflow-auto ">
       {/* Profile Image */}
-      <div className="w-[20%] overflow-hidden aspect-square rounded-full relative">
+      <div className="h-16 w-16 min-h-16 min-w-16 sm:h-24 sm:w-24 overflow-hidden aspect-square rounded-full relative">
         <Image
           src={profileImagesrc}
           fill
@@ -30,7 +30,7 @@ export default function TestimonialItem({
       </div>
 
       {/* Text and Link */}
-      <div className="mt-8">
+      <div className="mt-4">
         <div className="flex gap-1 ">
           <Star stroke="none" className="fill-yellow-500" />
           <Star stroke="none" className="fill-yellow-500" />

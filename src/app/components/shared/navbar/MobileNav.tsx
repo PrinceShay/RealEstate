@@ -12,15 +12,14 @@ export default function MobileNav() {
           icon={<House className="min-h-full" size={22} />}
         />
         <MobileNavItem
+          title="Suchen"
+          link="/immobilien"
+          icon={<Search className="min-h-full" size={22} />}
+        />
+        <MobileNavItem
           title="Wissen"
           link="/"
           icon={<Lightbulb className="min-h-full" size={22} />}
-        />
-
-        <MobileNavItem
-          title="Kaufen"
-          link="/immobilien"
-          icon={<Search className="min-h-full" size={22} />}
         />
 
         <MobileNavItem
