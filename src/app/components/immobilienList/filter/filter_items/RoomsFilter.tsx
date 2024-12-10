@@ -33,7 +33,7 @@ const RoomsFilter: React.FC<RoomsFilterProps> = ({
           min={0}
         />
 
-        <span className="mx-2">–</span>
+        <span className="hidden sm:block mx-2">–</span>
 
         {/* Bis */}
         <IncrementDecrementInput

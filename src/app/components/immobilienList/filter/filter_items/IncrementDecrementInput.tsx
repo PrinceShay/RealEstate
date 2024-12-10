@@ -27,7 +27,7 @@ const IncrementDecrementInput: React.FC<IncrementDecrementInputProps> = ({
   return (
     <div className="flex items-center gap-4">
       <label className="mb-2 flex items-center gap-2">{label}</label>
-      <div className="flex items-center border rounded  dark:bg-gray-dark">
+      <div className="flex items-center border rounded  dark:bg-gray-dark dark:border-gray-light">
         <button
           type="button"
           onClick={decrement}

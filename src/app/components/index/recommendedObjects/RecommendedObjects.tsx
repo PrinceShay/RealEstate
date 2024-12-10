@@ -11,8 +11,8 @@ const RecommendedObjects = async () => {
   const estates: EstateCard[] = await getData();
 
   return (
-    <section className="px-4 sm:px-16 max-w-[1600px] mx-auto py-24">
-      <div className="text-center">
+    <section className="px-0 sm:px-16 max-w-[1600px] mx-auto py-24">
+      <div className="text-center px-4 sm:px-0">
         <h1 className="text-4xl sm:text-5xl mb-6 leading-tight">
           Vorgestellte Immobilien
         </h1>

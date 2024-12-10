@@ -58,11 +58,12 @@ export default function BlogCollection({ blogs }: Props) {
   );
 
   return (
-    <div ref={containerRef}>
+    <div className="pl-4" ref={containerRef}>
       <Swiper
         spaceBetween={32}
         autoplay={{ delay: 100 }}
         slidesPerView={3}
+        className=""
         breakpoints={{
           // Ab einer Bildschirmbreite von 0px bis <640px (Mobile)
           0: {

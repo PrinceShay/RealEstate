@@ -20,7 +20,7 @@ const AreaFilter: React.FC<AreaFilterProps> = ({
   setAreaTo,
 }) => {
   return (
-    <div className="mb-6">
+    <div className="mb-6 ">
       <label className="mb-2 flex items-center gap-2">
         <Maximize2 strokeWidth={1.5} /> Fläche (m²)
       </label>
@@ -33,7 +33,7 @@ const AreaFilter: React.FC<AreaFilterProps> = ({
           min={0}
         />
 
-        <span className="mx-2">–</span>
+        <span className="hidden sm:block mx-2">–</span>
 
         {/* Bis */}
         <IncrementDecrementInput

@@ -11,6 +11,7 @@ import { SlidersVertical } from "lucide-react"; // Icons
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -286,14 +287,19 @@ const EstateListFilter: React.FC = () => {
           <SheetTrigger asChild>
             <Button
               variant="secondary"
-              className="w-full flex items-center justify-center"
+              className="w-full flex items-center justify-center dark:bg-gray-dark"
             >
               <SlidersVertical className="mr-2" /> Mehr Filter
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-full sm:w-80">
+          <SheetContent
+            side="left"
+            className="w-full sm:w-80 bg-white dark:bg-gray-dark"
+          >
             <SheetHeader>
-              <SheetTitle>Weitere Filter</SheetTitle>
+              <SheetTitle className="dark:text-gray-lightest">
+                Weitere Filter
+              </SheetTitle>
             </SheetHeader>
             {/* Typ-Filter */}
             <TypeFilter
@@ -327,11 +333,13 @@ const EstateListFilter: React.FC = () => {
             />
 
             {/* Filter anwenden Button */}
-            <div className="flex justify-end">
-              <Button onClick={handleFilter} className="w-full sm:w-auto">
-                Filter anwenden
-              </Button>
-            </div>
+            <SheetClose asChild>
+              <div className="flex justify-end">
+                <Button onClick={handleFilter} className="w-full sm:w-auto">
+                  Filter anwenden
+                </Button>
+              </div>
+            </SheetClose>
           </SheetContent>
         </Sheet>
       </div>
@@ -378,7 +386,7 @@ const EstateListFilter: React.FC = () => {
           >
             Filter zurücksetzen
           </Button>
-          <Button onClick={handleFilter} className="w-full sm:w-auto">
+          <Button onClick={handleFilter} className="w-full sm:w-auto ">
             Filter anwenden
           </Button>
         </div>
